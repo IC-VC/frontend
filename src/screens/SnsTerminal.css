@@ -1,0 +1,7 @@
+@keyframes tickerh {
+  0% { transform: translatex(0%); }
+  100% { transform: translatex(-200%); }
+}
+
+.hmove { animation: tickerh linear 20s infinite; }
+.hmove:hover { animation-play-state: paused; }
