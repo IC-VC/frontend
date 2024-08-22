@@ -25,3 +25,4 @@ dist-ssr
 .dfx/*
 deps/pulled.json
 deps/*
+.yarn/*
