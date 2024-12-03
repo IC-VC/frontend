@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react'
+import { FC, useCallback } from 'react'
 import { FormLabel, Sheet, Stack, Typography } from '@mui/joy'
 
 import { useDropzone } from 'react-dropzone'
@@ -24,6 +24,10 @@ const FileUpload: FC<Props> = ({ name, value, setValue }) => {
     accept: {
       'image/png': ['.png', '.jpg', '.jpeg'],
       'application/pdf': ['.pdf'],
+      'application/vnd.ms-excel': ['.xls'],
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': [
+        '.xlsx',
+      ],
     },
   })
 
@@ -52,6 +56,9 @@ const FileUpload: FC<Props> = ({ name, value, setValue }) => {
   return (
     <Stack flex={1}>
       {name && <FormLabel>{t(`form.${name}`)}</FormLabel>}
+      <Typography level="body-xs">
+        Accepted file types: png, jpg, jpeg, pdf, xls, xlsx
+      </Typography>
       <Stack
         component={Sheet}
         variant="outlined"

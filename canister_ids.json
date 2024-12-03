@@ -1,5 +1,9 @@
 {
   "icvc_frontend": {
-    "ic": "mnc6b-aaaaa-aaaap-qhnrq-cai"
+    "ic": "mnc6b-aaaaa-aaaap-qhnrq-cai",
+    "staging": "m4rl4-iyaaa-aaaap-qkigq-cai"
+  },
+  "internet_identity": {
+    "staging": "mvsaa-6qaaa-aaaap-qkiha-cai"
   }
 }

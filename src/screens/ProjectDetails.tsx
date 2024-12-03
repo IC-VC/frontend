@@ -1,5 +1,6 @@
 import ProjectStageCard from '@/components/ProjectStageCard'
 import useProject from '@/hooks/useProject'
+import { StepStatus } from '@/interfaces/project'
 import { ROUTES } from '@/utils/routes'
 import { Breadcrumbs, Grid, Link, Stack, Typography, useTheme } from '@mui/joy'
 import { ArrowLeftIcon } from 'lucide-react'

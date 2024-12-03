@@ -36,6 +36,17 @@ const ProjectStageCard: FC<Props> = ({
     return pathname === path
   }, [pathname, path])
 
+  const canClick = useMemo(() => {
+    if (disabled) return false
+    if (!stageStatus) return true
+
+    return [
+      StepStatus.Evaluation,
+      StepStatus.NotApproved,
+      StepStatus.Approved,
+    ].includes(stageStatus)
+  }, [disabled, stageStatus])
+
   return (
     <Stack
       component={Sheet}
@@ -49,7 +60,7 @@ const ProjectStageCard: FC<Props> = ({
       boxShadow="lg"
       flex={1}
       variant={isSelected ? 'outlined' : 'plain'}
-      onClick={() => !disabled && navigate(path)}
+      onClick={() => canClick && navigate(path)}
     >
       <Stack mb={1}>
         <Typography level="title-md" fontWeight="bold">

@@ -2,6 +2,7 @@ import EvaluationResultTable from '@/components/EvaluationResultTable'
 import SnsVoteGrid from '@/components/SnsVoteGrid'
 import TeamMemberCard from '@/components/TeamMemberCard'
 import useProject from '@/hooks/useProject'
+import useProposal from '@/hooks/useProposal'
 import { Avatar, Chip, Divider, Grid, Sheet, Stack, Typography } from '@mui/joy'
 import { FC, PropsWithChildren } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -27,8 +28,17 @@ const ProjectDashboard = () => {
 
   const { t } = useTranslation()
 
-  const { project, amountRaising, projectStatus, evaluationStepResults, logo } =
-    useProject(projectId || '')
+  const {
+    project,
+    amountRaising,
+    projectStatus,
+    evaluationStepResults,
+    logo,
+    step0ProposalId,
+    userGrades,
+  } = useProject(projectId || '')
+
+  const { results } = useProposal(step0ProposalId)
 
   return (
     <Grid container spacing={2} ml={5} mr={5}>
@@ -57,7 +67,7 @@ const ProjectDashboard = () => {
             <Stack>
               <Typography level="body-sm">Size of Round</Typography>
               <Typography level="h4" fontWeight="lg">
-                {amountRaising?.toLocaleString()} ICP
+                $ {amountRaising?.toLocaleString()}
               </Typography>
             </Stack>
             <Stack>
@@ -94,13 +104,20 @@ const ProjectDashboard = () => {
             <Typography level="body-lg" mb={2} fontWeight="lg">
               Application
             </Typography>
-            <SnsVoteGrid totalVotes={0} forVotes={0} againstVotes={0} />
+            <SnsVoteGrid
+              totalVotes={results?.totalVotingPower || 0}
+              forVotes={results?.yes || 0}
+              againstVotes={results?.no || 0}
+            />
           </ProjectSection>
           <ProjectSection>
             <Typography level="body-lg" fontWeight="lg">
               Evaluation
             </Typography>
-            <EvaluationResultTable gradeResult={evaluationStepResults} />
+            <EvaluationResultTable
+              gradeResult={evaluationStepResults}
+              userGrades={userGrades}
+            />
           </ProjectSection>
           <ProjectSection>
             <Typography level="body-lg" fontWeight="lg" mb={2}>

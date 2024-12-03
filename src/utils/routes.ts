@@ -6,6 +6,7 @@ export const ROUTES = {
   PROJECTS_INDEX: '/projects',
   PROJECTS_MANAGER: '/projects/manage',
   PROJECTS_NEW: '/projects/manage/new',
+  MY_PROJECTS: '/projects/my',
   PROJECTS_EDIT: (projectId: string) => `/projects/manage/${projectId}`,
   PROJECTS_PHASE_SECTION_FORM: (
     projectId: string,
@@ -21,4 +22,8 @@ export const ROUTES = {
   SNS_TERMINAL: '/sns',
   SNS_TERMINAL_PROJECT: (id: string) => `/sns/${id}`,
   DOCS: '/documents',
+  FORUM: '/forum',
+
+  NEURON_LIST: '/neurons',
+  NEURON_FORM: '/neurons/new',
 }

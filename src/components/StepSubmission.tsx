@@ -1,11 +1,14 @@
 import { Step } from '@/idls/backend.did'
+import { Question } from '@/utils/formConfig'
 import { Divider, Sheet, Stack, Typography } from '@mui/joy'
 import React, { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
+const BASE_URL = 'https://icvc-s3-uploads.s3.eu-central-1.amazonaws.com'
+
 interface Props {
   step: Step
-  fields: string[]
+  fields: Question[]
 }
 
 const QuestionSubmission = ({
@@ -35,14 +38,66 @@ const QuestionSubmission = ({
   )
 }
 
+const FileSubmission = ({
+  id,
+  url,
+  fileType,
+}: {
+  id: string
+  url?: string
+  fileType?: string
+}) => {
+  const { t } = useTranslation()
+
+  const fullUrl = `${BASE_URL}/${url}`
+
+  return (
+    <Stack
+      component={Sheet}
+      bgcolor={(theme) => theme.palette.background.body}
+      boxShadow="lg"
+      variant="outlined"
+      borderRadius={10}
+      p={2}
+      spacing={1}
+    >
+      <Typography level="body-sm" fontWeight="lg">
+        {t(`form.${id}`)}
+      </Typography>
+      <Divider sx={{ width: 100 }} />
+      <a href={fullUrl} target="_blank">
+        <Typography level="body-md">{t(`fileTypes.${fileType}`)}</Typography>
+      </a>
+    </Stack>
+  )
+}
+
 const StepSubmission: FC<Props> = ({ step, fields }) => {
-  const renderField = (field: string) => {
-    if (field.includes('QUESTION')) {
+  const renderField = (field: Question) => {
+    if (field.id.includes('QUESTION')) {
       const submission = step.question_submission.find(
-        (submission) => submission.id === field
+        (submission) => submission.id === field.id
       )
       return (
-        <QuestionSubmission id={field} response={submission?.response?.[0]} />
+        <QuestionSubmission
+          id={field.id}
+          response={submission?.response?.[0]}
+        />
+      )
+    }
+    if (field.id.includes('FILE')) {
+      const submission = step.upload_files.find(
+        (submission) =>
+          Object.keys(submission.document_type)[0] ===
+          Object.keys(field.documentType || {})[0]
+      )
+      if (!submission) return
+      return (
+        <FileSubmission
+          id={field.id}
+          url={submission?.s3_key}
+          fileType={Object.keys(submission?.document_type || {})[0]}
+        />
       )
     }
   }

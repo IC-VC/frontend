@@ -23,7 +23,8 @@ import shortAddress from '@/utils/shortAddress'
 
 const NAV_ITEMS = [
   { name: 'Projects', route: ROUTES.PROJECTS_INDEX, routeElement: 'projects' },
-  { name: 'SNS Terminal', route: ROUTES.SNS_TERMINAL, routeElement: 'sns' },
+  // { name: 'Forum', route: ROUTES.FORUM, routeElement: 'forum' },
+  // { name: 'SNS Terminal', route: ROUTES.SNS_TERMINAL, routeElement: 'sns' },
   // { name: 'Funds', route: ROUTES.DOCS, routeElement: 'docs' },
 ]
 
@@ -89,8 +90,18 @@ const NavBar = () => {
               <Avatar />
             </MenuButton>
             <Menu>
+              <MenuItem onClick={() => navigate(ROUTES.MY_PROJECTS)}>
+                My Projects
+              </MenuItem>
               <MenuItem onClick={() => navigate(ROUTES.PROJECTS_NEW)}>
                 New Project
+              </MenuItem>
+              <ListDivider />
+              <MenuItem onClick={() => navigate(ROUTES.NEURON_LIST)}>
+                Linked Neurons
+              </MenuItem>
+              <MenuItem onClick={() => navigate(ROUTES.NEURON_FORM)}>
+                Link New Neuron
               </MenuItem>
               <ListDivider />
               <MenuItem onClick={() => logout().catch(console.log)}>

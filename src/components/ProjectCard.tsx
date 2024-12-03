@@ -19,9 +19,10 @@ import useProject from '@/hooks/useProject'
 
 interface Props {
   project: Project
+  manage?: boolean
 }
 
-const ProjectCard: FC<Props> = ({ project }) => {
+const ProjectCard: FC<Props> = ({ project, manage }) => {
   const navigate = useNavigate()
 
   const { t } = useTranslation()
@@ -32,7 +33,11 @@ const ProjectCard: FC<Props> = ({ project }) => {
     <motion.div
       whileTap={{ scale: 0.99 }}
       onClick={() =>
-        navigate(ROUTES.PROJECTS_SHOW_DASHBOARD(project.id.toString()))
+        navigate(
+          manage
+            ? ROUTES.PROJECTS_EDIT(project.id.toString())
+            : ROUTES.PROJECTS_SHOW_DASHBOARD(project.id.toString())
+        )
       }
     >
       <Card variant="outlined">

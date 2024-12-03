@@ -1,16 +1,22 @@
+import { UserGrade } from '@/hooks/useProject'
 import { StepPhaseGradeResult } from '@/idls/backend.did'
 import { Table, Typography } from '@mui/joy'
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const STEP_COUNT = 12
 
 interface Props {
   gradeResult?: StepPhaseGradeResult
+  userGrades?: UserGrade[]
 }
 
-const EvaluationResultTable: FC<Props> = ({ gradeResult }) => {
+const EvaluationResultTable: FC<Props> = ({ gradeResult, userGrades }) => {
   const { t } = useTranslation()
+
+  const totalUserGrades = useMemo(() => {
+    return (userGrades || []).reduce((acc, grade) => acc + grade.grade, 0)
+  }, [userGrades])
 
   const renderEvaluationRow = (index: number) => (
     <tr>
@@ -19,7 +25,7 @@ const EvaluationResultTable: FC<Props> = ({ gradeResult }) => {
           {t(`evaluation.steps.${index}`)}
         </Typography>
       </td>
-      <td>0</td>
+      <td>{userGrades?.find((g) => g.stepId === index)?.grade || 'N/A'}</td>
       <td>
         {gradeResult?.steps_grade_results[index]?.grade_avg?.toFixed(2) ||
           'N/A'}
@@ -28,7 +34,6 @@ const EvaluationResultTable: FC<Props> = ({ gradeResult }) => {
         {gradeResult?.steps_grade_results[index]?.grades_count.toString() ||
           'N/A'}
       </td>
-      <td>Submitted</td>
     </tr>
   )
 
@@ -40,7 +45,6 @@ const EvaluationResultTable: FC<Props> = ({ gradeResult }) => {
           <th>Your Grade</th>
           <th>Avrg Grade</th>
           <th>Votes</th>
-          <th>Status</th>
         </tr>
       </thead>
       <tbody>
@@ -49,9 +53,8 @@ const EvaluationResultTable: FC<Props> = ({ gradeResult }) => {
       <tfoot>
         <tr>
           <th>Average</th>
-          <th>N/A</th>
+          <th>{(totalUserGrades / STEP_COUNT).toFixed(2)}</th>
           <th>{gradeResult?.avg_result?.toFixed(2) || 'N/A'}</th>
-          <th></th>
           <th></th>
         </tr>
       </tfoot>

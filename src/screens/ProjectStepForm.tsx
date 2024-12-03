@@ -137,6 +137,8 @@ const ProjectStepForm = () => {
       })
     )
 
+    console.log('TEST', uploadUrls)
+
     if ('Ok' in uploadUrls) {
       for (let i in uploadUrls.Ok) {
         await fetch(uploadUrls.Ok[i].url, {

@@ -20,6 +20,10 @@ import ProjectStepForm from '@/screens/ProjectStepForm'
 import ProjectManager from '@/screens/ProjectManager'
 import Login from '@/screens/Login'
 import SNSDetails from '@/screens/SNSDetails'
+import Forum from '@/screens/Forum'
+import NeuronList from './NeuronList'
+import NeuronForm from './NeuronForm'
+import MyProjects from '@/screens/MyProjects'
 
 const RootHandler = () => {
   return null
@@ -33,6 +37,10 @@ const ROUTE_DATA: RouteObject[] = [
   {
     path: ROUTES.PROJECTS_INDEX,
     element: <ProjectList />,
+  },
+  {
+    path: ROUTES.MY_PROJECTS,
+    element: <MyProjects />,
   },
   {
     path: ROUTES.SNS_TERMINAL,
@@ -89,6 +97,18 @@ const ROUTE_DATA: RouteObject[] = [
         element: <ProjectEvaluation />,
       },
     ],
+  },
+  {
+    path: ROUTES.FORUM,
+    element: <Forum />,
+  },
+  {
+    path: ROUTES.NEURON_LIST,
+    element: <NeuronList />,
+  },
+  {
+    path: ROUTES.NEURON_FORM,
+    element: <NeuronForm />,
   },
 ]
 

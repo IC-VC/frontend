@@ -71,7 +71,6 @@ const EvaluationTab: FC<Props> = ({ currentStep, setCurrentStep }) => {
   }, [currentPosition, scrollRef.current])
 
   const scroll = (direction: string) => {
-    console.log('TEST', currentPosition + SCROLL_STEP, scrollRef.current)
     scrollRef.current.scrollTo({
       left:
         direction === 'right'

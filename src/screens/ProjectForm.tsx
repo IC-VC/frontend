@@ -1,10 +1,14 @@
 import { useMemo, useState } from 'react'
 import {
+  Alert,
   Box,
   Button,
   FormControl,
   FormLabel,
   Grid,
+  Modal,
+  ModalClose,
+  ModalDialog,
   Option,
   Select,
   Stack,
@@ -22,6 +26,11 @@ import useConfig from '@/hooks/useConfig'
 import useBackend from '@/hooks/useBackend'
 import { Link, TeamMember } from '@/idls/backend.did'
 import { ROUTES } from '@/utils/routes'
+import { IcrcLedgerCanister } from '@dfinity/ledger-icrc'
+import { Principal } from '@dfinity/principal'
+
+const ICVC_LEDGER = 'm6xut-mqaaa-aaaaq-aadua-cai'
+const ICVC_GOVERNANCE = 'ntzq5-dyaaa-aaaaq-aadtq-cai'
 
 const INIT_VALUES = {
   title: '',
@@ -46,6 +55,8 @@ const ProjectForm = () => {
 
   const [memberFormVisible, setMemberFormVisible] = useState(false)
   const [memberInEdit, setMemberInEdit] = useState<ProjectTeamMember>()
+
+  const [payModalVisible, setPayModalVisible] = useState(false)
 
   const { project } = useProject(projectId || '')
   const { categories } = useConfig()
@@ -112,6 +123,24 @@ const ProjectForm = () => {
     return links
   }
 
+  const payFee = async () => {
+    await window.ic.plug.requestConnect({ whitelist: [ICVC_LEDGER] })
+    await window.ic.plug.createAgent({ whitelist: [ICVC_LEDGER] })
+
+    const { transfer } = IcrcLedgerCanister.create({
+      agent: window.ic.plug.agent,
+      canisterId: Principal.from(ICVC_LEDGER),
+    })
+
+    return transfer({
+      to: {
+        owner: Principal.from(ICVC_GOVERNANCE),
+        subaccount: [],
+      },
+      amount: BigInt(10_000_000_000),
+    })
+  }
+
   const createProject = async (values: any) => {
     setProjectSaving(true)
 
@@ -148,7 +177,10 @@ const ProjectForm = () => {
       }
     })
 
+    const transaction_id = await payFee()
+
     const response = await backendActor.createProject({
+      transaction_id,
       title,
       moto,
       description,
@@ -180,8 +212,8 @@ const ProjectForm = () => {
                 .finally(() => setProjectSaving(false))
             }
           >
-            {({ values, errors, handleSubmit, setFieldValue }) => (
-              <form onSubmit={handleSubmit}>
+            {({ values, setFieldValue, submitForm, isValid }) => (
+              <form>
                 <Stack spacing={2} mt={3} mb={10}>
                   <Stack>
                     <Typography level="h4">Project Creation Form</Typography>
@@ -261,7 +293,6 @@ const ProjectForm = () => {
                   visible={memberFormVisible}
                   onClose={() => setMemberFormVisible(false)}
                   setTeamMember={(newMember) => {
-                    console.log('n', newMember)
                     if (!newMember.id) {
                       setFieldValue(
                         'teamMembers',
@@ -296,11 +327,33 @@ const ProjectForm = () => {
                 >
                   <Box alignContent="center">
                     {canEdit && (
-                      <Button type="submit" loading={projectSaving}>
+                      <Button
+                        type="submit"
+                        onClick={(e) => {
+                          setPayModalVisible(true)
+                          e.preventDefault()
+                        }}
+                        loading={projectSaving}
+                        disabled={!isValid}
+                      >
                         Create and Proceed
                       </Button>
                     )}
                   </Box>
+                  <Modal
+                    open={payModalVisible}
+                    onClose={() => setPayModalVisible(false)}
+                  >
+                    <ModalDialog maxWidth={400}>
+                      <ModalClose />
+                      <Typography mt={2}>
+                        Now you will be asked to pay flat 100 ICVC creation fee,
+                        this helps covering costs associated with project
+                        processing and prevent SPAM
+                      </Typography>
+                      <Button onClick={submitForm}>Pay with Plug</Button>
+                    </ModalDialog>
+                  </Modal>
                 </Stack>
               </form>
             )}

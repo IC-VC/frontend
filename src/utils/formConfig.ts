@@ -131,7 +131,6 @@ export const EVALUATION_SECTIONS: Section[] = [
         documentType: { ExpenditurePlan: null },
       },
       { id: 'ICVC_QUESTION_1_11_0', type: 'textarea' },
-      { id: 'ICVC_QUESTION_1_11_1', type: 'textarea' },
     ],
   },
 ]

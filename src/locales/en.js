@@ -84,11 +84,12 @@ export const enLocalisation = {
     ICVC_FILE_1_10_0:
       'Please record a 5 to 10-minute product demonstration that showcases the technology and functionality of your product or service. In this demo, aim to highlight key aspects of your technology and any underlying code, while ensuring not to disclose proprietary or sensitive information. This demo should provide a clear understanding of how your product works, as well as focusing on technological strengths.',
     ICVC_QUESTION_1_11_0:
-      'Please upload your two-year expenditure plan using the standard template provided. ',
+      'Briefly describe your two -year expenditure plan based on the document you’ve attached. Highlight key fund allocations, and how they align with your strategic milestones and growth objectives. ',
     ICVC_QUESTION_1_11_1:
       "Briefly describe your two-year expenditure plan, based on the document you've attached. Highlight key allocations and how they align with your strategic milestones and growth objectives.",
     ICVC_FILE_1_11_0:
-      'Discuss your two-year roadmap and explain how it aligns with your expenditure plan and overall growth strategy.',
+      'Upload your two-year expenditure plan using the standard template provided.',
+    neuronId: 'Neuron ID',
   },
   projectPhases: {
     0: 'Application Phase',
@@ -135,5 +136,11 @@ export const enLocalisation = {
     NotFunded: 'Not Funded',
     NotSubmitted: 'Not Funded',
     Funded: 'Funded',
+  },
+  fileTypes: {
+    ExpenditurePlan: 'Expenditure Plan',
+    PitchDeck: 'Pith Deck',
+    FinancialModels: 'Financial Models',
+    ProductDemo: 'Product Demo',
   },
 }

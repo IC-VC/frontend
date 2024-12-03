@@ -16,6 +16,11 @@ export interface StepInternal {
   evaluationEndDate: Date
 }
 
+export interface UserGrade {
+  stepId: number
+  grade: number
+}
+
 const useProject = (projectId: string) => {
   const { backendActor } = useBackend()
   const [project, setProject] = useState<Project>()
@@ -25,6 +30,9 @@ const useProject = (projectId: string) => {
     useState<StepPhaseGradeResult>()
   const [submissionStepResults, setSubmissionsStepResults] =
     useState<StepPhaseGradeResult>()
+
+  const [step0ProposalId, setStep0ProposalId] = useState<number>()
+  const [userGrades, setUserGrades] = useState<UserGrade[]>([])
 
   const mapStepPhase = (phase: StepPhase): StepInternal => {
     const {
@@ -57,6 +65,35 @@ const useProject = (projectId: string) => {
       .getProjectById(BigInt(projectId || ''))
       .then((projectResponse) => {
         if ('Ok' in projectResponse) setProject(projectResponse.Ok)
+      })
+      .catch(console.log)
+  }, [projectId, backendActor])
+
+  useEffect(() => {
+    if (!backendActor) return
+
+    backendActor
+      .getAllUserStepPhaseStepsGrade(BigInt(projectId || ''), BigInt(1))
+      .then((result) => {
+        if ('Ok' in result) {
+          setUserGrades(
+            result.Ok.map(({ step_id, grade }) => ({
+              stepId: Number(step_id),
+              grade,
+            }))
+          )
+        }
+      })
+      .catch(console.log)
+  }, [backendActor, projectId])
+
+  useEffect(() => {
+    backendActor
+      .getAllProposalsByStepPhase(BigInt(projectId || ''), BigInt(0))
+      .then((result) => {
+        if ('Ok' in result) {
+          setStep0ProposalId(Number(result.Ok[0]?.proposal_id))
+        }
       })
       .catch(console.log)
   }, [projectId, backendActor])
@@ -164,6 +201,8 @@ const useProject = (projectId: string) => {
     submissionStepResults,
     coverPicture,
     logo,
+    step0ProposalId,
+    userGrades,
   }
 }
 
