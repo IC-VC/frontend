@@ -30,7 +30,8 @@ import { IcrcLedgerCanister } from '@dfinity/ledger-icrc'
 import { Principal } from '@dfinity/principal'
 
 const ICVC_LEDGER = 'm6xut-mqaaa-aaaaq-aadua-cai'
-const ICVC_GOVERNANCE = 'ntzq5-dyaaa-aaaaq-aadtq-cai'
+const COMISSION_WALLET = 'az453-x2sxf-wewfl-pszbd-4u4rh-yq7nk-hxkrp-6yvo3-mnlce-zjvsg-qae'
+const FEE_AMOUNT = 10_000_000_000
 
 const INIT_VALUES = {
   title: '',
@@ -57,6 +58,7 @@ const ProjectForm = () => {
   const [memberInEdit, setMemberInEdit] = useState<ProjectTeamMember>()
 
   const [payModalVisible, setPayModalVisible] = useState(false)
+  const [payInProgress, setPayInProgress] = useState(false)
 
   const { project } = useProject(projectId || '')
   const { categories } = useConfig()
@@ -124,9 +126,7 @@ const ProjectForm = () => {
   }
 
   const payFee = async () => {
-    await window.ic.plug.requestConnect({ whitelist: [ICVC_LEDGER] })
-    await window.ic.plug.createAgent({ whitelist: [ICVC_LEDGER] })
-
+    setPayInProgress(true)
     const { transfer } = IcrcLedgerCanister.create({
       agent: window.ic.plug.agent,
       canisterId: Principal.from(ICVC_LEDGER),
@@ -134,10 +134,10 @@ const ProjectForm = () => {
 
     return transfer({
       to: {
-        owner: Principal.from(ICVC_GOVERNANCE),
+        owner: Principal.from(COMISSION_WALLET),
         subaccount: [],
       },
-      amount: BigInt(10_000_000_000),
+      amount: BigInt(FEE_AMOUNT),
     })
   }
 
@@ -179,6 +179,9 @@ const ProjectForm = () => {
 
     const transaction_id = await payFee()
 
+    setPayInProgress(false)
+    setPayModalVisible(false)
+
     const response = await backendActor.createProject({
       transaction_id,
       title,
@@ -194,6 +197,7 @@ const ProjectForm = () => {
         ROUTES.PROJECTS_PHASE_SECTION_FORM(response.Ok.id.toString(), 0, 0)
       )
     } else if ('Err' in response) {
+      console.log('RESPONSE', response)
       alert(response.Err)
     }
   }
@@ -347,11 +351,9 @@ const ProjectForm = () => {
                     <ModalDialog maxWidth={400}>
                       <ModalClose />
                       <Typography mt={2}>
-                        Now you will be asked to pay flat 100 ICVC creation fee,
-                        this helps covering costs associated with project
-                        processing and prevent SPAM
+                        A 100 $ICVC fee is charged for the creation of an application to ICVC DAO
                       </Typography>
-                      <Button onClick={submitForm}>Pay with Plug</Button>
+                      <Button onClick={submitForm} loading={payInProgress}>Pay with Plug</Button>
                     </ModalDialog>
                   </Modal>
                 </Stack>

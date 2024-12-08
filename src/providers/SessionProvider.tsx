@@ -7,69 +7,65 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { AuthClient } from '@dfinity/auth-client'
-import { AnonymousIdentity, Identity } from '@dfinity/agent'
+import { HttpAgent } from '@dfinity/agent'
 
 interface SessionContextType {
-  identity?: Identity
+  agent?: HttpAgent
   login: () => Promise<void>
   logout: () => Promise<void>
   authInProgress: boolean
+  isLoggedIn: boolean
 }
+
+const ICVC_LEDGER = 'm6xut-mqaaa-aaaaq-aadua-cai'
 
 export const SessionContext = createContext<SessionContextType>(null as any)
 
 const SessionProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [identity, setIdentity] = useState<Identity>()
+  const [agent, setAgent] = useState<HttpAgent>()
   const [authInProgress, setAuthInProgress] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  const checkAuth = useCallback(async () => {
+    if (!window.ic?.plug) return
+
+    const isConnected = await window.ic.plug.isConnected()
+    setIsLoggedIn(isConnected)
+
+    if (isConnected) {
+      setAgent(window.ic.plug.agent)
+    } else {
+      const agent = new HttpAgent({ host: import.meta.env.VITE_IC_HOST })
+      setAgent(agent)
+    }
+  }, [])
 
   useEffect(() => {
     setAuthInProgress(true)
-    AuthClient.create()
-      .then((client) => {
-        return client.getIdentity()
-      })
-      .then((identity) => {
-        if (
-          new AnonymousIdentity().getPrincipal().toString() !==
-          identity.getPrincipal().toString()
-        ) {
-          setIdentity(identity)
-        }
-      })
-      .finally(() => {
-        setAuthInProgress(false)
-      })
+    checkAuth()
+      .catch(console.log)
+      .finally(() => setAuthInProgress(false))
   }, [])
 
   const login = useCallback(async () => {
-    setAuthInProgress(true)
-
-    let authClient = await AuthClient.create()
-
-    await new Promise((resolve) => {
-      authClient.login({
-        identityProvider: import.meta.env.VITE_II_HOST,
-        maxTimeToLive: BigInt(7 * 24 * 60 * 60 * 1000 * 1000 * 1000),
-        onSuccess: resolve,
-        onError: () => setAuthInProgress(false),
-      })
-    })
-
-    const newIdentity = authClient.getIdentity()
-    setIdentity(newIdentity)
-  }, [setIdentity])
+    if (!window.ic?.plug) {
+      alert('Plug Wallet not installed!')
+      return
+    }
+    await window.ic.plug.requestConnect({ whitelist: [import.meta.env.VITE_BACKEND_CANISTER_ID, ICVC_LEDGER] })
+    setIsLoggedIn(true)
+    setAgent(window.ic.plug.agent)
+  }, [setAgent])
 
   const logout = useCallback(async () => {
-    let authClient = await AuthClient.create()
-    await authClient.logout()
-    setIdentity(undefined)
-    setAuthInProgress(false)
+    await window.ic.plug.disconnect()
+    setIsLoggedIn(false)
+    setAgent(new HttpAgent({ host: import.meta.env.VITE_IC_HOST }))
   }, [])
 
   const value = useMemo(() => {
-    return { identity, login, logout, authInProgress }
-  }, [identity, login, logout, authInProgress])
+    return { agent, login, logout, authInProgress, isLoggedIn }
+  }, [agent, login, logout, authInProgress, isLoggedIn])
 
   return (
     <SessionContext.Provider value={value}>{children}</SessionContext.Provider>

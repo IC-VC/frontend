@@ -134,7 +134,7 @@ export const enLocalisation = {
   projectStatuses: {
     Open: 'Open',
     NotFunded: 'Not Funded',
-    NotSubmitted: 'Not Funded',
+    NotSubmitted: 'Not Submitted',
     Funded: 'Funded',
   },
   fileTypes: {

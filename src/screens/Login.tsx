@@ -26,7 +26,7 @@ const Login = () => {
           loading={authInProgress}
           onClick={() => login().catch(console.log)}
         >
-          Sign in with Internet Identity
+          Sign in Plug
         </Button>
       </Stack>
     </Stack>

@@ -3,7 +3,6 @@ import { Button, Grid, Stack, Typography } from '@mui/joy'
 import FormField from './FormField'
 import { Formik } from 'formik'
 import useBackend from '@/hooks/useBackend'
-import useSession from '@/hooks/useSession'
 import { useNavigate } from 'react-router-dom'
 import { ROUTES } from '@/utils/routes'
 
@@ -13,7 +12,6 @@ const INIT_VALUES = {
 
 const NeuronForm = () => {
   const [neuronLinkInProgress, setNeuronLinkInProgress] = useState(false)
-  const { identity } = useSession()
 
   const { backendActor } = useBackend()
 
@@ -31,7 +29,7 @@ const NeuronForm = () => {
           </Typography>
           <Typography>
             Your local Principal:{' '}
-            <strong>{identity?.getPrincipal()?.toString()}</strong>
+            <strong>{window.ic.plug.principalId.toString()}</strong>
           </Typography>
         </Stack>
         <Formik

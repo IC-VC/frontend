@@ -13,14 +13,9 @@ interface BackendContextType {
 export const BackendContext = createContext<BackendContextType>(null as any)
 
 const BackendProvider: FC<PropsWithChildren> = ({ children }) => {
-  const { identity } = useSession()
+  const { agent } = useSession()
 
   const backendActor = useMemo(() => {
-    const agent = new HttpAgent({
-      host: import.meta.env.VITE_IC_HOST,
-      identity,
-    })
-
     if (import.meta.env.VITE_IC_HOST !== 'https://icp0.io') {
       agent.fetchRootKey().catch(console.log)
     }
@@ -29,7 +24,7 @@ const BackendProvider: FC<PropsWithChildren> = ({ children }) => {
       agent,
       canisterId: import.meta.env.VITE_BACKEND_CANISTER_ID,
     }) as ActorSubclass<BackendActor>
-  }, [identity])
+  }, [agent])
 
   return (
     <BackendContext.Provider value={{ backendActor }}>

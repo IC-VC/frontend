@@ -33,7 +33,7 @@ const NavBar = () => {
 
   const navigate = useNavigate()
 
-  const { identity, authInProgress, login, logout } = useSession()
+  const { isLoggedIn, authInProgress, login, logout } = useSession()
   const { palette } = useTheme()
 
   const performLogin = useCallback(() => {
@@ -73,16 +73,16 @@ const NavBar = () => {
           ))}
         </Stack>
         <Box flex={1} />
-        {!identity && (
+        {!isLoggedIn && (
           <Button onClick={performLogin} loading={authInProgress}>
             Login
           </Button>
         )}
-        {identity && (
+        {isLoggedIn && (
           <Dropdown>
             <MenuButton variant="plain">
               <Typography mr={1} fontWeight="lg">
-                {shortAddress(identity?.getPrincipal()?.toString(), {
+                {shortAddress(window.ic.plug.principalId, {
                   leftSize: 6,
                   rightSize: 4,
                 })}
