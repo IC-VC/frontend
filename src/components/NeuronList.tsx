@@ -4,6 +4,7 @@ import { ROUTES } from '@/utils/routes'
 import { Button, Grid, Sheet, Stack, Table, Typography } from '@mui/joy'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import shortAddress from '@/utils/shortAddress'
 
 const NeuronList = () => {
   const navigate = useNavigate()
@@ -46,8 +47,18 @@ const NeuronList = () => {
               <tbody>
                 {linkedNeurons.map((neuron) => (
                   <tr>
-                    <td>{neuron.neuron_id}</td>
-                    <td>{neuron.user_id.toString()}</td>
+                    <td>
+                      {shortAddress(neuron.neuron_id, {
+                        leftSize: 10,
+                        rightSize: 10,
+                      })}
+                    </td>
+                    <td>
+                      {shortAddress(neuron.user_id.toString(), {
+                        leftSize: 10,
+                        rightSize: 15,
+                      })}
+                    </td>
                   </tr>
                 ))}
               </tbody>
