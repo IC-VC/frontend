@@ -1,10 +1,15 @@
 import StepSubmission from '@/components/StepSubmission'
 import useProject from '@/hooks/useProject'
-import { Grid, LinearProgress, Sheet, Stack, Typography } from '@mui/joy'
+import {
+  Box,
+  Button,
+  Grid,
+  LinearProgress,
+  Sheet,
+  Stack,
+  Typography,
+} from '@mui/joy'
 import { useParams } from 'react-router-dom'
-
-import VoteDown from '@/assets/vote-down.svg'
-import VoteFor from '@/assets/vote-for.svg'
 import useProposal from '@/hooks/useProposal'
 import { useCallback, useMemo } from 'react'
 
@@ -25,7 +30,7 @@ const ProjectApplication = () => {
   const progress = useMemo(() => {
     if (!results) return 0
 
-    return (results.yes / (results.yes + results.no)) * 100
+    return (results.yes / results.totalVotingPower) * 100
   }, [results])
 
   const onVoteClick = useCallback(() => {
@@ -46,9 +51,13 @@ const ProjectApplication = () => {
           p={2}
           spacing={3}
         >
-          <Typography level="h4">Round 1 Vote</Typography>
-          <Typography>
-            This is an SNS vote to move this project to Due Dilligence phase or
+          <Box>
+            <Typography level="h3">Round 1 Vote</Typography>
+            <Typography>SNS Vote</Typography>
+          </Box>
+
+          <Typography fontSize={18}>
+            This is an vote to move this project to Due Dilligence phase or
             reject the invesment opportunity
           </Typography>
           <LinearProgress
@@ -57,10 +66,7 @@ const ProjectApplication = () => {
             value={progress}
             color="success"
           />
-          <Stack direction="row" justifyContent="space-between">
-            <img src={VoteFor} height={50} width={50} onClick={onVoteClick} />
-            <img src={VoteDown} height={50} width={50} onClick={onVoteClick} />
-          </Stack>
+          <Button onClick={onVoteClick}>Participate in SNS vote</Button>
         </Stack>
       </Grid>
       <Grid xs={8}>

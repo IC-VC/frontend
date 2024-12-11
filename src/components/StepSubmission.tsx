@@ -33,7 +33,7 @@ const QuestionSubmission = ({
         {t(`form.${id}`)}
       </Typography>
       <Divider sx={{ width: 100 }} />
-      <Typography level="body-md">{response || 'N/A'}</Typography>
+      <Typography level="body-md">{response || '-'}</Typography>
     </Stack>
   )
 }

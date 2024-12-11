@@ -25,14 +25,13 @@ const EvaluationResultTable: FC<Props> = ({ gradeResult, userGrades }) => {
           {t(`evaluation.steps.${index}`)}
         </Typography>
       </td>
-      <td>{userGrades?.find((g) => g.stepId === index)?.grade || 'N/A'}</td>
+      <td>{userGrades?.find((g) => g.stepId === index)?.grade || '0'}</td>
       <td>
-        {gradeResult?.steps_grade_results[index]?.grade_avg?.toFixed(2) ||
-          'N/A'}
+        {gradeResult?.steps_grade_results[index]?.grade_avg?.toFixed(2) || '0'}
       </td>
       <td>
         {gradeResult?.steps_grade_results[index]?.grades_count.toString() ||
-          'N/A'}
+          '0'}
       </td>
     </tr>
   )
@@ -54,7 +53,7 @@ const EvaluationResultTable: FC<Props> = ({ gradeResult, userGrades }) => {
         <tr>
           <th>Average</th>
           <th>{(totalUserGrades / STEP_COUNT).toFixed(2)}</th>
-          <th>{gradeResult?.avg_result?.toFixed(2) || 'N/A'}</th>
+          <th>{gradeResult?.avg_result?.toFixed(2) || '0'}</th>
           <th></th>
         </tr>
       </tfoot>
