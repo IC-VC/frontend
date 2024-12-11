@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react'
 import {
-  Alert,
   Box,
   Button,
   FormControl,
@@ -28,9 +27,11 @@ import { Link, TeamMember } from '@/idls/backend.did'
 import { ROUTES } from '@/utils/routes'
 import { IcrcLedgerCanister } from '@dfinity/ledger-icrc'
 import { Principal } from '@dfinity/principal'
+import { useAgent } from '@nfid/identitykit/react'
 
 const ICVC_LEDGER = 'm6xut-mqaaa-aaaaq-aadua-cai'
-const COMISSION_WALLET = 'az453-x2sxf-wewfl-pszbd-4u4rh-yq7nk-hxkrp-6yvo3-mnlce-zjvsg-qae'
+const COMISSION_WALLET =
+  'az453-x2sxf-wewfl-pszbd-4u4rh-yq7nk-hxkrp-6yvo3-mnlce-zjvsg-qae'
 const FEE_AMOUNT = 10_000_000_000
 
 const INIT_VALUES = {
@@ -65,6 +66,7 @@ const ProjectForm = () => {
 
   const { backendActor } = useBackend()
   const navigate = useNavigate()
+  const agent = useAgent()
 
   const shouldRenderForm = (projectId && project) || !projectId
 
@@ -128,7 +130,7 @@ const ProjectForm = () => {
   const payFee = async () => {
     setPayInProgress(true)
     const { transfer } = IcrcLedgerCanister.create({
-      agent: window.ic.plug.agent,
+      agent,
       canisterId: Principal.from(ICVC_LEDGER),
     })
 
@@ -212,7 +214,14 @@ const ProjectForm = () => {
             validationSchema={ProjectSchema}
             onSubmit={(values) =>
               createProject(values)
-                .catch(console)
+                .catch((e) => {
+                  console.log('Project save error', e)
+
+                  setPayModalVisible(false)
+                  setPayInProgress(false)
+                  setProjectSaving(false)
+                  alert('Project saving failed')
+                })
                 .finally(() => setProjectSaving(false))
             }
           >
@@ -351,9 +360,12 @@ const ProjectForm = () => {
                     <ModalDialog maxWidth={400}>
                       <ModalClose />
                       <Typography mt={2}>
-                        A 100 $ICVC fee is charged for the creation of an application to ICVC DAO
+                        A 100 $ICVC fee is charged for the creation of an
+                        application to ICVC DAO
                       </Typography>
-                      <Button onClick={submitForm} loading={payInProgress}>Pay with Plug</Button>
+                      <Button onClick={submitForm} loading={payInProgress}>
+                        Pay fee & save project
+                      </Button>
                     </ModalDialog>
                   </Modal>
                 </Stack>

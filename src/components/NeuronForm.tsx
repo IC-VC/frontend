@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { Button, Grid, Stack, Typography } from '@mui/joy'
+import { Box, Button, Grid, Stack, Typography } from '@mui/joy'
 import FormField from './FormField'
 import { Formik } from 'formik'
 import useBackend from '@/hooks/useBackend'
 import { useNavigate } from 'react-router-dom'
 import { ROUTES } from '@/utils/routes'
+import { useAuth } from '@nfid/identitykit/react'
 
 const INIT_VALUES = {
   neuronId: '',
@@ -12,10 +13,9 @@ const INIT_VALUES = {
 
 const NeuronForm = () => {
   const [neuronLinkInProgress, setNeuronLinkInProgress] = useState(false)
-
   const { backendActor } = useBackend()
-
   const navigate = useNavigate()
+  const { user } = useAuth()
 
   return (
     <Grid container spacing={2} ml={5} mr={5} mt={2}>
@@ -27,10 +27,17 @@ const NeuronForm = () => {
             Please add your local Principal ID as a hotkey to your neuron (this
             is used to validate the ownership of the neuron)
           </Typography>
-          <Typography>
-            Your local Principal:{' '}
-            <strong>{window.ic.plug.principalId.toString()}</strong>
-          </Typography>
+          <Box my={2}>
+            <Typography>Your local Principal:</Typography>
+            <Typography
+              bgcolor={(theme) => theme.palette.background.level2}
+              px={1}
+              py={1}
+              borderRadius={10}
+            >
+              {user?.principal.toString()}
+            </Typography>
+          </Box>
         </Stack>
         <Formik
           initialValues={INIT_VALUES}

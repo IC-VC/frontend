@@ -14,12 +14,11 @@ import {
   Typography,
   useTheme,
 } from '@mui/joy'
-import { useCallback, useState } from 'react'
 import { ROUTES } from '../utils/routes'
 import { useLocation, useNavigate } from 'react-router-dom'
 import icvcLogo from '../assets/logo.png'
-import useSession from '../hooks/useSession'
 import shortAddress from '@/utils/shortAddress'
+import { useAuth } from '@nfid/identitykit/react'
 
 const NAV_ITEMS = [
   { name: 'Projects', route: ROUTES.PROJECTS_INDEX, routeElement: 'projects' },
@@ -33,12 +32,9 @@ const NavBar = () => {
 
   const navigate = useNavigate()
 
-  const { isLoggedIn, authInProgress, login, logout } = useSession()
-  const { palette } = useTheme()
+  const { connect, disconnect, isConnecting, user } = useAuth()
 
-  const performLogin = useCallback(() => {
-    login().catch(console.log)
-  }, [login])
+  const { palette } = useTheme()
 
   return (
     <Box>
@@ -73,16 +69,16 @@ const NavBar = () => {
           ))}
         </Stack>
         <Box flex={1} />
-        {!isLoggedIn && (
-          <Button onClick={performLogin} loading={authInProgress}>
+        {!user && (
+          <Button onClick={() => connect()} loading={isConnecting}>
             Login
           </Button>
         )}
-        {isLoggedIn && (
+        {user && (
           <Dropdown>
             <MenuButton variant="plain">
               <Typography mr={1} fontWeight="lg">
-                {shortAddress(window.ic.plug.principalId, {
+                {shortAddress(user.principal.toString(), {
                   leftSize: 6,
                   rightSize: 4,
                 })}
@@ -104,7 +100,7 @@ const NavBar = () => {
                 Link New Neuron
               </MenuItem>
               <ListDivider />
-              <MenuItem onClick={() => logout().catch(console.log)}>
+              <MenuItem onClick={() => disconnect().catch(console.log)}>
                 <Typography textColor={palette.danger[500]}>Logout</Typography>
               </MenuItem>
             </Menu>

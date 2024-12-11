@@ -1,6 +1,7 @@
+import '@nfid/identitykit/react/styles.css'
+
 import { RouterProvider } from 'react-router-dom'
 import { router } from './components/Router'
-import SessionProvider from './providers/SessionProvider'
 import { CssVarsProvider, extendTheme } from '@mui/joy/styles'
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
@@ -9,6 +10,8 @@ import BackendProvider from './providers/BackendProvider'
 import ConfigProvider from './providers/ConfigProvider'
 import { useMemo } from 'react'
 import MobileNotAvailable from './screens/MobileNotAvailable'
+import { IdentityKitProvider } from '@nfid/identitykit/react'
+import { IdentityKitAuthType, InternetIdentity, Plug } from '@nfid/identitykit'
 
 import './global.css'
 
@@ -69,13 +72,20 @@ function App() {
 
   return (
     <CssVarsProvider theme={theme}>
-      <SessionProvider>
+      <IdentityKitProvider
+        authType={IdentityKitAuthType.DELEGATION}
+        signers={[Plug, InternetIdentity]}
+        featuredSigner={Plug}
+        signerClientOptions={{
+          targets: [import.meta.env.VITE_BACKEND_CANISTER_ID],
+        }}
+      >
         <BackendProvider>
           <ConfigProvider>
             <RouterProvider router={router} />
           </ConfigProvider>
         </BackendProvider>
-      </SessionProvider>
+      </IdentityKitProvider>
     </CssVarsProvider>
   )
 }

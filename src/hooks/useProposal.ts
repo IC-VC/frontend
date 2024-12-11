@@ -1,5 +1,5 @@
 import { Actor, ActorSubclass, HttpAgent } from '@dfinity/agent'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { idlFactory } from '@/idls/governance.did'
 import type { _SERVICE as GovernanceActor } from '@/idls/governance.did'
@@ -17,7 +17,7 @@ const useProposal = (proposalId?: number) => {
     useState<ActorSubclass<GovernanceActor>>()
 
   const createGovernanceActor = useCallback(async () => {
-    const agent = new HttpAgent({
+    const agent = HttpAgent.createSync({
       host: import.meta.env.VITE_IC_HOST,
     })
 

@@ -1,11 +1,11 @@
 import { FC, PropsWithChildren } from 'react'
-import useSession from '../hooks/useSession'
 import Login from '@/screens/Login'
+import { useAuth } from '@nfid/identitykit/react'
 
 const ProtectedRoute: FC<PropsWithChildren> = ({ children }) => {
-  const { isLoggedIn } = useSession()
+  const { user } = useAuth()
 
-  if (!isLoggedIn) {
+  if (!user) {
     return <Login />
   }
 

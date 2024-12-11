@@ -104,11 +104,19 @@ const ROUTE_DATA: RouteObject[] = [
   },
   {
     path: ROUTES.NEURON_LIST,
-    element: <NeuronList />,
+    element: (
+      <ProtectedRoute>
+        <NeuronList />
+      </ProtectedRoute>
+    ),
   },
   {
     path: ROUTES.NEURON_FORM,
-    element: <NeuronForm />,
+    element: (
+      <ProtectedRoute>
+        <NeuronForm />
+      </ProtectedRoute>
+    ),
   },
 ]
 

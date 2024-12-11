@@ -1,10 +1,10 @@
 import { FC, PropsWithChildren, createContext, useMemo } from 'react'
-import useSession from '@/hooks/useSession'
 
 import { idlFactory as backendIdl } from '@/idls/backend.did'
 import type { _SERVICE as BackendActor } from '@/idls/backend.did'
 
 import { Actor, ActorSubclass, HttpAgent } from '@dfinity/agent'
+import { useAgent } from '@nfid/identitykit/react'
 
 interface BackendContextType {
   backendActor: ActorSubclass<BackendActor>
@@ -13,15 +13,12 @@ interface BackendContextType {
 export const BackendContext = createContext<BackendContextType>(null as any)
 
 const BackendProvider: FC<PropsWithChildren> = ({ children }) => {
-  const { agent } = useSession()
+  const agent = useAgent()
 
   const backendActor = useMemo(() => {
-    if (import.meta.env.VITE_IC_HOST !== 'https://icp0.io') {
-      agent.fetchRootKey().catch(console.log)
-    }
-
     return Actor.createActor(backendIdl, {
-      agent,
+      agent:
+        agent || HttpAgent.createSync({ host: import.meta.env.VITE_IC_HOST }),
       canisterId: import.meta.env.VITE_BACKEND_CANISTER_ID,
     }) as ActorSubclass<BackendActor>
   }, [agent])

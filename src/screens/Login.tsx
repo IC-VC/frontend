@@ -1,9 +1,9 @@
 import { Box, Button, Sheet, Stack, Typography } from '@mui/joy'
 import icvcLogo from '@/assets/logo.png'
-import useSession from '@/hooks/useSession'
+import { useAuth } from '@nfid/identitykit/react'
 
 const Login = () => {
-  const { authInProgress, login } = useSession()
+  const { connect, isConnecting } = useAuth()
 
   return (
     <Stack flex={1} justifyContent="center" alignItems="center" height="90vh">
@@ -22,11 +22,8 @@ const Login = () => {
         <Typography level="h4" textAlign="center" mb={3}>
           To perform this action you need to Log In
         </Typography>
-        <Button
-          loading={authInProgress}
-          onClick={() => login().catch(console.log)}
-        >
-          Sign in Plug
+        <Button loading={isConnecting} onClick={() => connect()}>
+          Sign in
         </Button>
       </Stack>
     </Stack>
