@@ -24,6 +24,7 @@ import Forum from '@/screens/Forum'
 import NeuronList from './NeuronList'
 import NeuronForm from './NeuronForm'
 import MyProjects from '@/screens/MyProjects'
+import { Stack } from '@mui/joy'
 
 const RootHandler = () => {
   return null
@@ -128,10 +129,10 @@ const RootLayout = () => {
   }
 
   return (
-    <div>
+    <Stack flex={1} maxWidth="100vw">
       <NavBar />
       <Outlet />
-    </div>
+    </Stack>
   )
 }
 

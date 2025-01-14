@@ -95,7 +95,6 @@ const SnsCard: FC<Props> = ({ sns, price, priceChange }) => {
               height={50}
               width={300}
               data={chartPoints}
-              onMouseMove={console.log}
             />
           )}
         </Box>
@@ -106,13 +105,13 @@ const SnsCard: FC<Props> = ({ sns, price, priceChange }) => {
           <Typography level="body-md" fontWeight="bold">
             Price
           </Typography>
-          <Typography level="body-sm">${price?.price.toFixed(5)}</Typography>
+          <Typography level="h4">${price?.price.toFixed(5)}</Typography>
         </Stack>
-        <Stack>
+        {/* <Stack>
           <Typography level="body-md" fontWeight="bold">
             24h Volume
           </Typography>
-        </Stack>
+        </Stack> */}
       </Stack>
     </Stack>
   )

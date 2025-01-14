@@ -11,7 +11,9 @@ import {
 } from '@mui/joy'
 import { useParams } from 'react-router-dom'
 import useProposal from '@/hooks/useProposal'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
+import { SNS_FORUMS } from '@/utils/forumConfig'
+import ProjectSidebarForum from '@/components/ProjectSidebarForum'
 
 const FIELDS = [
   'ICVC_QUESTION_0_0_0',
@@ -68,6 +70,8 @@ const ProjectApplication = () => {
           />
           <Button onClick={onVoteClick}>Participate in SNS vote</Button>
         </Stack>
+
+        <ProjectSidebarForum />
       </Grid>
       <Grid xs={8}>
         {projectDetails && (

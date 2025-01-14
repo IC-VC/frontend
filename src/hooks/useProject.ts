@@ -102,6 +102,7 @@ const useProject = (projectId: string) => {
     backendActor
       .getAllStepPhaseByProjectId(BigInt(projectId || ''))
       .then((response) => {
+        console.log('PHASES', response)
         if ('Ok' in response)
           setProjectStepPhases(response.Ok.map(mapStepPhase))
       })
@@ -109,6 +110,46 @@ const useProject = (projectId: string) => {
   }, [projectId, backendActor])
 
   useEffect(() => {
+    if (projectId == '1') {
+      setProjectDetails({
+        id: BigInt(0),
+        question_submission: [
+          {
+            id: 'ICVC_QUESTION_0_0_0',
+            response: [
+              "WaterNeuron is a liquid staking protocol for the Internet Computer network, simplifying ICP staking and enhancing capital efficiency. It allows users to maintain exposure to ICP staking rewards while keeping tokens liquid, addressing the challenge of competing with high ICP returns in DeFi. WaterNeuron aims to decentralize governance by providing an alternative to DFINITY's voting power. WaterNeuron's mission is to streamline staking, improve capital efficiency, and contribute to the decentralization of the Internet Computer ecosystem.",
+            ],
+          },
+          {
+            id: 'ICVC_QUESTION_0_0_1',
+            response: [
+              '- Léo K. - ex-DFINITY engineers - worked in the chain-fusion team doing ckBTC, ckETH, and ckERC20 - https://github.com/leokazz - Enzo D. - ex-DFINITY engineers - worked in the IDX team doing infrastructure, build reproducibility, and was pitching the IC at conferences  - https://github.com/EnzoPlayer0ne/ - Ulysse K. - student at Polytechnique Paris - https://github.com/uk4z',
+            ],
+          },
+          {
+            id: 'ICVC_QUESTION_0_0_2',
+            response: [
+              'Staking rewards are split 90% for liquid staking token holders and 10% for the DAO. As more ICP gets staked into the protocol, the DAO earns a larger stream of ICP staking rewards.',
+            ],
+          },
+          {
+            id: 'ICVC_QUESTION_0_0_3',
+            response: [
+              'Short-Term: - accrue more ICP staked on the protocol by whales. Audit the code by Trail of Bits to allow for greater amount of TVL.  - augment the visibility of WaterNeuron. Part of the ICP deposited in Papaya would be used to pay for CoinMarket Cap and Token Terminal integrations. Long Term: - Develop a DEX with one pair ICP/nICP that will allow for greater liquidity pool depth.',
+            ],
+          },
+          {
+            id: 'ICVC_QUESTION_0_0_4',
+            response: [
+              'The protocol is live, controlled by the WaterNeuron SNS, and currently has 1.3M $ICP staked.',
+            ],
+          },
+        ],
+        decimal_submission: [],
+      })
+
+      return
+    }
     backendActor
       .getStepById(BigInt(projectId || ''), BigInt(0), BigInt(0))
       .then((step0Result) => {
@@ -123,6 +164,7 @@ const useProject = (projectId: string) => {
     backendActor
       .getStepPhaseAssessmentResult(BigInt(projectId), BigInt(0))
       .then((result) => {
+        console.log('ASSESMENT RESULt', result)
         if ('Ok' in result) {
           setSubmissionsStepResults(result.Ok)
         }
@@ -144,6 +186,7 @@ const useProject = (projectId: string) => {
   }, [projectId])
 
   const amountRaising = useMemo(() => {
+    if (projectId == '1') return 400000
     if (!projectDetails) return
 
     return Number(
@@ -164,10 +207,15 @@ const useProject = (projectId: string) => {
   }
 
   const coverPicture = useMemo(() => {
+    if (projectId == '1')
+      return 'https://plug-cdn.s3.amazonaws.com/wn-cover.jpg'
+
     return findUploadFile('CoverPhoto', projectDetails?.upload_files || [])
   }, [projectDetails, projectId])
 
   const logo = useMemo(() => {
+    if (projectId == '1') return 'https://plug-cdn.s3.amazonaws.com/wn-logo.jpg'
+
     return findUploadFile('Logo', projectDetails?.upload_files || [])
   }, [projectDetails, projectId])
 

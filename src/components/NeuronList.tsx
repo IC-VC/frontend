@@ -1,7 +1,7 @@
 import useBackend from '@/hooks/useBackend'
 import { UserNeuron } from '@/idls/backend.did'
 import { ROUTES } from '@/utils/routes'
-import { Button, Grid, Sheet, Stack, Table, Typography } from '@mui/joy'
+import { Box, Button, Grid, Sheet, Stack, Table, Typography } from '@mui/joy'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import shortAddress from '@/utils/shortAddress'
@@ -64,9 +64,11 @@ const NeuronList = () => {
               </tbody>
             </Table>
           </Sheet>
-          <Button onClick={() => navigate(ROUTES.NEURON_FORM)}>
-            ADD NEURON
-          </Button>
+          <Box mt={2}>
+            <Button onClick={() => navigate(ROUTES.NEURON_FORM)}>
+              Link New Neuron
+            </Button>
+          </Box>
         </Grid>
       </Grid>
     </Stack>

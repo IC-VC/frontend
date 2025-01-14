@@ -29,7 +29,7 @@ const QuestionSubmission = ({
       p={2}
       spacing={1}
     >
-      <Typography level="body-sm" fontWeight="lg">
+      <Typography level="h4" fontSize={17}>
         {t(`form.${id}`)}
       </Typography>
       <Divider sx={{ width: 100 }} />
@@ -61,7 +61,7 @@ const FileSubmission = ({
       p={2}
       spacing={1}
     >
-      <Typography level="body-sm" fontWeight="lg">
+      <Typography level="h4" fontSize={17}>
         {t(`form.${id}`)}
       </Typography>
       <Divider sx={{ width: 100 }} />

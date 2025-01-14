@@ -47,7 +47,7 @@ const TeamMemberForm: FC<Props> = ({
   return (
     <Modal open={visible} onClose={onClose}>
       <ModalDialog minWidth={650}>
-        <Stack spacing={2}>
+        <Stack spacing={2} overflow="scroll">
           <Stack alignItems="center" flex={1}>
             <img width={100} src="/assets/edit.gif" />
             <Typography level="h4">Add Team Member</Typography>

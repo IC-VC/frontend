@@ -2,6 +2,7 @@ import { ProjectTeamMember } from '@/interfaces/project'
 import { Avatar, Sheet, Stack, Typography } from '@mui/joy'
 import { Edit, Trash } from 'lucide-react'
 import React, { FC } from 'react'
+import LinksView from './LinksView'
 
 interface Props {
   teamMember: ProjectTeamMember
@@ -29,16 +30,19 @@ const TeamMemberCard: FC<Props> = ({
           </Typography>
           <Typography>{teamMember.position}</Typography>
         </Stack>
-        <Stack direction="row" spacing={1}>
+        <Stack spacing={1}>
           {onEditClick && <Edit size={20} onClick={onEditClick} />}
           {onDeleteClick && <Trash size={20} onClick={onDeleteClick} />}
         </Stack>
       </Stack>
-      <Typography mt={2}>
-        <Typography fontWeight="lg">Previously:{` `}</Typography>
+      <Stack direction="row" mt={2}>
+        <Typography flex={1}>
+          <Typography fontWeight="lg">Previously:{` `}</Typography>
+          {teamMember.previous_experience}
+        </Typography>
+      </Stack>
 
-        {teamMember.previous_experience}
-      </Typography>
+      <LinksView links={teamMember.links} />
     </Stack>
   )
 }

@@ -51,13 +51,14 @@ const NeuronForm = () => {
                   alert(`${errorKey}: ${result.Err[errorKey]}`)
                   return
                 }
-                navigate(ROUTES.NEURON_LIST)
               })
               .catch((e) => {
                 console.log('Linking error', e)
-                alert('Error linking neuron')
               })
-              .finally(() => setNeuronLinkInProgress(false))
+              .finally(() => {
+                navigate(ROUTES.NEURON_LIST)
+                setNeuronLinkInProgress(false)
+              })
           }}
         >
           {({ handleSubmit }) => (

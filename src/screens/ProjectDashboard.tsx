@@ -1,4 +1,6 @@
 import EvaluationResultTable from '@/components/EvaluationResultTable'
+import LinksView from '@/components/LinksView'
+import ProjectSidebarForum from '@/components/ProjectSidebarForum'
 import SnsVoteGrid from '@/components/SnsVoteGrid'
 import TeamMemberCard from '@/components/TeamMemberCard'
 import useProject from '@/hooks/useProject'
@@ -75,6 +77,7 @@ const ProjectDashboard = () => {
             </Stack>
           </Stack>
         </Stack>
+        <ProjectSidebarForum />
       </Grid>
       <Grid xs={8}>
         <Stack spacing={2}>
@@ -87,7 +90,15 @@ const ProjectDashboard = () => {
               </Typography>
               <Typography>{project?.description}</Typography>
             </Stack>
-            <Stack mt={2} spacing={1}>
+
+            <Stack mt={1} spacing={1}>
+              <Typography level="title-md" fontWeight="lg">
+                Connect with {project?.title}
+              </Typography>
+              <LinksView links={project?.links || []} />
+            </Stack>
+
+            <Stack mt={3} spacing={1}>
               <Typography level="title-lg" fontWeight="lg">
                 Meet the Team
               </Typography>

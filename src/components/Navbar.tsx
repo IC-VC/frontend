@@ -22,8 +22,8 @@ import { useAuth } from '@nfid/identitykit/react'
 
 const NAV_ITEMS = [
   { name: 'Projects', route: ROUTES.PROJECTS_INDEX, routeElement: 'projects' },
-  // { name: 'Forum', route: ROUTES.FORUM, routeElement: 'forum' },
-  // { name: 'SNS Terminal', route: ROUTES.SNS_TERMINAL, routeElement: 'sns' },
+  { name: 'Forum', route: ROUTES.FORUM, routeElement: 'forum' },
+  { name: 'SNS Terminal', route: ROUTES.SNS_TERMINAL, routeElement: 'sns' },
   // { name: 'Funds', route: ROUTES.DOCS, routeElement: 'docs' },
 ]
 

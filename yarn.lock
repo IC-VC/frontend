@@ -1342,6 +1342,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@open-ic/openchat-xframe@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "@open-ic/openchat-xframe@npm:1.0.6"
+  checksum: 8f379bdef1213ab198fe0b8f1664f7d6981c8061671a99daf63823375e0e84d67e28bb7bb59682f13cf1b51513d861e9c752ad65c1fab75642bd4b6556fd706a
+  languageName: node
+  linkType: hard
+
 "@pkgjs/parseargs@npm:^0.11.0":
   version: 0.11.0
   resolution: "@pkgjs/parseargs@npm:0.11.0"
@@ -3788,6 +3795,7 @@ __metadata:
     "@mui/joy": ^5.0.0-beta.36
     "@mui/material": ^5.15.21
     "@nfid/identitykit": ^1.0.3
+    "@open-ic/openchat-xframe": ^1.0.6
     "@types/react": ^18.3.3
     "@types/react-dom": ^18.3.0
     "@typescript-eslint/eslint-plugin": ^7.13.1

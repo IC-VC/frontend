@@ -1,55 +1,108 @@
-import { Grid, Sheet, Stack } from '@mui/joy'
-import React from 'react'
-
-const SNS_FORUMS = [
-  {
-    id: 'ICVC',
-    logo: 'https://3r4gx-wqaaa-aaaaq-aaaia-cai.icp0.io/v1/sns/root/nuywj-oaaaa-aaaaq-aadta-cai/logo.png',
-    channels: [{ title: 'Channel 1', id: '' }],
-  },
-  {
-    id: 'ICVC1',
-    logo: 'https://3r4gx-wqaaa-aaaaq-aaaia-cai.icp0.io/v1/sns/root/nuywj-oaaaa-aaaaq-aadta-cai/logo.png',
-    channels: [{ title: 'Channel 1', id: '' }],
-  },
-  {
-    id: 'ICVC2',
-    logo: 'https://3r4gx-wqaaa-aaaaq-aaaia-cai.icp0.io/v1/sns/root/nuywj-oaaaa-aaaaq-aadta-cai/logo.png',
-    channels: [{ title: 'Channel 1', id: '' }],
-  },
-  {
-    id: 'ICVC3',
-    logo: 'https://3r4gx-wqaaa-aaaaq-aaaia-cai.icp0.io/v1/sns/root/nuywj-oaaaa-aaaaq-aadta-cai/logo.png',
-    channels: [{ title: 'Channel 1', id: '' }],
-  },
-]
+import { Box, Stack, Typography, useTheme } from '@mui/joy'
+import { useEffect, useRef, useState } from 'react'
+import { initialise } from '@open-ic/openchat-xframe'
+import { OpenChatXFrame } from '@open-ic/openchat-xframe/lib/types'
+import { SNS_FORUMS, SNSForum } from '@/utils/forumConfig'
 
 const Forum = () => {
+  const chatRef = useRef()
+  const [selectedProject, setSelectedProject] = useState<SNSForum>(
+    SNS_FORUMS[0]
+  )
+  const [chatClient, setChatClient] = useState<OpenChatXFrame>()
+
+  const theme = useTheme()
+
+  useEffect(() => {
+    if (!chatRef.current) return
+    initialise(chatRef?.current, {
+      targetOrigin: 'https://oc.app',
+      initialPath:
+        '/community/rwbxa-nqaaa-aaaaf-bifjq-cai/channel/210512813903665502637022972014400610340',
+      theme: {
+        name: 'signals',
+        base: 'light',
+        overrides: {
+          entry: {
+            bg: 'white',
+            input: {
+              bg: 'white',
+              bd: 'black',
+            },
+          },
+          chatSummary: {
+            'bg-selected': '#F4F4F5',
+          },
+        },
+      },
+      settings: {
+        disableLeftNav: true,
+      },
+    })
+      .then(setChatClient)
+      .catch(console.log)
+  }, [chatRef, theme])
+
   return (
-    <Stack>
-      <Grid
-        container
-        borderBottom={2}
+    <Stack m={2} flex={1} alignItems="center">
+      <Stack
+        border={2}
         color={(theme) => theme.palette.border.primary}
         mb={3}
-        pl={5}
-        pr={5}
+        borderRadius={10}
+        overflow="hidden"
+        direction="row"
+        flex={1}
+        width={800}
       >
-        <Grid
+        <Stack
           xs={0.5}
           borderRight={2}
           color={(theme) => theme.palette.border.primary}
         >
-          <Stack spacing={2}>
+          <Stack
+            spacing={2}
+            px={2}
+            py={1}
+            bgcolor={(theme) => theme.palette.primary}
+          >
             {SNS_FORUMS.map((forum) => (
-              <Stack>
-                <img src={forum.logo} width={30} height={30} />
+              <Stack alignItems="center">
+                <Stack
+                  bgcolor={(theme) =>
+                    selectedProject?.id === forum.id &&
+                    theme.palette.common.black
+                  }
+                  borderRadius={5}
+                  justifyContent="center"
+                  alignItems="center"
+                  p={1}
+                >
+                  <img
+                    onClick={() => {
+                      chatClient?.changePath(forum.channel)
+                      setSelectedProject(forum)
+                    }}
+                    src={forum.logo}
+                    width={30}
+                    height={30}
+                  />
+                </Stack>
               </Stack>
             ))}
           </Stack>
-        </Grid>
-        <Grid></Grid>
-      </Grid>
+        </Stack>
+        <Stack flex={1}>
+          <Box borderBottom={1} borderColor="black" p={2}>
+            <Typography level="h4">{selectedProject?.name}</Typography>
+          </Box>
+          <iframe
+            style={{ maxWidth: 760, flex: 1 }}
+            ref={chatRef}
+            frameborder="0"
+          />
+        </Stack>
+      </Stack>
     </Stack>
   )
 }

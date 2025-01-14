@@ -2,6 +2,7 @@ import { FC, useEffect, useMemo, useState } from 'react'
 import {
   Box,
   Button,
+  Card,
   Checkbox,
   Chip,
   Divider,
@@ -90,6 +91,16 @@ const ProjectList: FC<Props> = ({ showMy }) => {
     setSelectedCategories([])
   }
 
+  const renderNoProjects = () => (
+    <Box component={Card} alignItems="center">
+      <Typography level="h4">You don't have any projects</Typography>
+      <Typography>Please proceed and create your first project</Typography>
+      <Button onClick={() => navigate(ROUTES.PROJECTS_NEW)}>
+        Create new project
+      </Button>
+    </Box>
+  )
+
   return (
     <Stack>
       {!showMy && (
@@ -155,6 +166,7 @@ const ProjectList: FC<Props> = ({ showMy }) => {
           </Stack>
         </Box>
         <Grid xs={12} md={9} lg={9}>
+          {filteredProjects.length === 0 && showMy && renderNoProjects()}
           <Stack>
             <Grid container spacing={2}>
               {filteredProjects.map((project) => (

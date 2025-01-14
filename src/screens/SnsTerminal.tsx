@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import PageTitleBar from '../components/PageTitleBar'
 import useSns from '@/hooks/useSns'
 import { Box, Grid, Stack, Typography } from '@mui/joy'
@@ -7,8 +7,20 @@ import { SNS } from '@/services/SnsAggregator'
 import './SnsTerminal.css'
 import SnsCard from '@/components/SnsCard'
 
+const EXCLUDED_SNS = ['KINIC', 'SEER', '---']
+
 const SnsTerminal = () => {
   const { sns, token24hChanges, tokenPrices } = useSns()
+
+  const filteredSns = useMemo(() => {
+    return sns?.filter((sns) => {
+      const ticker = sns.icrc1_metadata.find(
+        (meta) => meta[0] === 'icrc1:symbol'
+      )?.[1]?.Text
+
+      return !EXCLUDED_SNS.includes(ticker)
+    })
+  }, [sns])
 
   const renderSnsTokenTile = (sns: SNS) => {
     const ticker = sns.icrc1_metadata.find(
@@ -59,10 +71,10 @@ const SnsTerminal = () => {
   }
 
   return (
-    <div>
+    <Stack flex={1}>
       <PageTitleBar
         title="SNS Terminal"
-        subtitle="The most powerful tool on ICP for real-time data, news and analytics"
+        subtitle="Tool on ICP for real-time data, news and analytics"
       />
       <Box
         overflow="hidden"
@@ -80,16 +92,16 @@ const SnsTerminal = () => {
         </Stack>
       </Box>
       <Grid container>
-        <Grid xs={3}></Grid>
-        <Grid xs={9}>
+        <Grid xs={1} />
+        <Grid xs={10}>
           <Box>
             <Grid container spacing={2} pr={3} mt={2}>
-              {sns?.map(renderSnsTokenCard)}
+              {filteredSns?.map(renderSnsTokenCard)}
             </Grid>
           </Box>
         </Grid>
       </Grid>
-    </div>
+    </Stack>
   )
 }
 

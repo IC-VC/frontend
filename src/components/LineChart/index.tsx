@@ -162,19 +162,19 @@ export const LineChart = ({
         onMouseMove={handleMouseMove}
         onMouseLeave={onMouseLeave}
       >
-        <motion.path
+        {/* <motion.path
           ref={pathRef}
           animate={{ d }}
           fill="none"
           stroke={'white'}
           strokeWidth={3}
-        />
+        /> */}
         <motion.path
           ref={pathRightRef}
           animate={{ d }}
           fill="none"
           strokeWidth={3}
-          stroke={'#1B59F8'}
+          stroke="#1B59F8"
           strokeDasharray="0"
         />
       </motion.svg>
