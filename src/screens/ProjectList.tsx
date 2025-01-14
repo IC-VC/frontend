@@ -54,7 +54,9 @@ const ProjectList: FC<Props> = ({ showMy }) => {
   }, [backendActor, showMy])
 
   const filteredProjects = useMemo(() => {
-    let projectsFiltered = projects
+    let projectsFiltered = showMy
+      ? projects
+      : projects.filter((p) => Object.keys(p.status)[0] !== 'Draft')
     if (selectedStates.length > 0) {
       projectsFiltered = projects.filter((p) =>
         selectedStates.includes(Object.keys(p.status)[0])
@@ -70,7 +72,7 @@ const ProjectList: FC<Props> = ({ showMy }) => {
     }
 
     return projectsFiltered
-  }, [projects, selectedStates, selectedCategories])
+  }, [projects, selectedStates, selectedCategories, showMy])
 
   const toggleState = (state: string) =>
     setSelectedStates((old) => {

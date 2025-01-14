@@ -58,6 +58,7 @@ export const idlFactory = ({ IDL }) => {
   })
   const ProjectStatus = IDL.Variant({
     Open: IDL.Null,
+    Draft: IDL.Null,
     NotFunded: IDL.Null,
     Funded: IDL.Null,
     NotSubmitted: IDL.Null,
@@ -480,6 +481,7 @@ export const idlFactory = ({ IDL }) => {
     links: IDL.Opt(IDL.Vec(Link)),
     team_members: IDL.Opt(IDL.Vec(TeamMember)),
   })
+  const Result_26 = IDL.Variant({ Ok: ProjectStatus, Err: APIError })
   const StepUpdate = IDL.Record({
     questions_submission: IDL.Opt(IDL.Vec(QuestionSubmission)),
     checkbox_submission: IDL.Opt(IDL.Vec(CheckBoxSubmission)),
@@ -492,7 +494,7 @@ export const idlFactory = ({ IDL }) => {
     subaccount: IDL.Opt(IDL.Text),
     sns_governance_id: IDL.Opt(IDL.Principal),
   })
-  const Result_26 = IDL.Variant({ Ok: IDL.Text, Err: IDL.Text })
+  const Result_27 = IDL.Variant({ Ok: IDL.Text, Err: IDL.Text })
   return IDL.Service({
     addAdmin: IDL.Func([UserCreate], [Result], []),
     addUserNeuron: IDL.Func([IDL.Text], [Result_1], []),
@@ -571,6 +573,7 @@ export const idlFactory = ({ IDL }) => {
     transform: IDL.Func([TransformArgs], [HttpResponse], ['query']),
     updateICVCConfig: IDL.Func([ICVCConfigUpdate], [Result_13], []),
     updateProject: IDL.Func([IDL.Nat64, ProjectUpdate], [Result_3], []),
+    updateProjectStatus: IDL.Func([Project, ProjectStatus], [Result_26], []),
     updateStep: IDL.Func(
       [IDL.Nat64, IDL.Nat64, IDL.Nat64, StepUpdate],
       [Result_18],
@@ -580,12 +583,12 @@ export const idlFactory = ({ IDL }) => {
     update_canister_config: IDL.Func([CanisterConfigUpdate], [Result_12], []),
     validate_project_vote_proposal: IDL.Func(
       [ProjectProposalPayload],
-      [Result_26],
+      [Result_27],
       []
     ),
     validate_update_canister_config: IDL.Func(
       [CanisterConfigUpdate],
-      [Result_26],
+      [Result_27],
       []
     ),
   })

@@ -1,6 +1,5 @@
 import type { Principal } from '@dfinity/principal'
 import type { ActorMethod } from '@dfinity/agent'
-import type { IDL } from '@dfinity/candid'
 
 export type APIError =
   | { InternalServerError: string }
@@ -255,6 +254,7 @@ export interface ProjectProposalPayload {
 }
 export type ProjectStatus =
   | { Open: null }
+  | { Draft: null }
   | { NotFunded: null }
   | { Funded: null }
   | { NotSubmitted: null }
@@ -325,7 +325,8 @@ export type Result_22 = { Ok: Array<UserNeuron> } | { Err: APIError }
 export type Result_23 = { Ok: StepPhaseVoteResult } | { Err: APIError }
 export type Result_24 = { Ok: boolean } | { Err: APIError }
 export type Result_25 = { Ok: number } | { Err: APIError }
-export type Result_26 = { Ok: string } | { Err: string }
+export type Result_26 = { Ok: ProjectStatus } | { Err: APIError }
+export type Result_27 = { Ok: string } | { Err: string }
 export type Result_3 = { Ok: Project } | { Err: APIError }
 export type Result_4 = { Ok: Array<UploadUrlResponse> } | { Err: APIError }
 export type Result_5 = { Ok: Array<User> } | { Err: APIError }
@@ -537,17 +538,16 @@ export interface _SERVICE {
   transform: ActorMethod<[TransformArgs], HttpResponse>
   updateICVCConfig: ActorMethod<[ICVCConfigUpdate], Result_13>
   updateProject: ActorMethod<[bigint, ProjectUpdate], Result_3>
+  updateProjectStatus: ActorMethod<[Project, ProjectStatus], Result_26>
   updateStep: ActorMethod<[bigint, bigint, bigint, StepUpdate], Result_18>
   updateUser: ActorMethod<[Principal, UserUpdate], Result>
   update_canister_config: ActorMethod<[CanisterConfigUpdate], Result_12>
   validate_project_vote_proposal: ActorMethod<
     [ProjectProposalPayload],
-    Result_26
+    Result_27
   >
   validate_update_canister_config: ActorMethod<
     [CanisterConfigUpdate],
-    Result_26
+    Result_27
   >
 }
-export declare const idlFactory: IDL.InterfaceFactory
-export declare const init: (args: { IDL: typeof IDL }) => IDL.Type[]
