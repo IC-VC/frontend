@@ -1,4 +1,5 @@
 import EvaluationTab from '@/components/EvaluationTab'
+import ProjectSidebarForum from '@/components/ProjectSidebarForum'
 import StepSubmission from '@/components/StepSubmission'
 import StepVoteCard from '@/components/StepVoteCard'
 import useBackend from '@/hooks/useBackend'
@@ -34,6 +35,7 @@ const ProjectEvaluation = () => {
           currentStep={currentStep}
           endDate={projectStepPhases?.[1]?.evaluationEndDate}
         />
+        <ProjectSidebarForum />
       </Grid>
       <Grid xs={12} md={8}>
         <EvaluationTab

@@ -123,14 +123,6 @@ export const EVALUATION_SECTIONS: Section[] = [
     ],
   },
   {
-    questions: [
-      {
-        id: 'ICVC_FILE_1_11_0',
-        type: 'file',
-        kind: QuestionKind.Input,
-        documentType: { ExpenditurePlan: null },
-      },
-      { id: 'ICVC_QUESTION_1_11_0', type: 'textarea' },
-    ],
+    questions: [{ id: 'ICVC_QUESTION_1_11_0', type: 'textarea' }],
   },
 ]

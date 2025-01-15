@@ -94,13 +94,25 @@ const EvaluationTab: FC<Props> = ({ currentStep, setCurrentStep }) => {
       >
         <Stack spacing={2} direction="row">
           {[...Array(STEP_COUNT)].map((_, index) => (
-            <Stack onClick={() => setCurrentStep(index)}>
+            <Stack
+              onClick={() => setCurrentStep(index)}
+              justifyContent="space-between"
+            >
               <Typography
-                fontWeight={currentStep === index ? 'lg' : 'md'}
+                fontWeight={index === currentStep ? 'lg' : 'sm'}
                 minWidth={150}
+                textAlign="center"
               >
                 {t(`evaluation.steps.${index}`)}
               </Typography>
+              {index === currentStep && (
+                <Box
+                  mt={1}
+                  bgcolor={(theme) => theme.palette.common.black}
+                  sx={{ height: '1px' }}
+                  borderRadius={5}
+                />
+              )}
             </Stack>
           ))}
         </Stack>
