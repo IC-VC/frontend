@@ -269,23 +269,35 @@ const ProjectForm = () => {
                     <FormLabel>Team Members</FormLabel>
                     <Box>
                       <Grid container sx={{ flexGrow: 1 }} spacing={2}>
-                        {values.teamMembers.map((teamMember) => (
-                          <Grid xs={4}>
-                            <TeamMemberCard
-                              teamMember={teamMember}
-                              onEditClick={() => {
-                                setMemberInEdit(teamMember)
-                                setMemberFormVisible(true)
-                              }}
-                              onDeleteClick={() => {
-                                const filtered = values.teamMembers.filter(
-                                  (tm) => tm.id !== teamMember.id
-                                )
-                                setFieldValue('teamMembers', filtered)
-                              }}
-                            />
-                          </Grid>
-                        ))}
+                        {values.teamMembers.map((tm) => {
+                          const teamMember = {
+                            ...tm,
+                            links: getLinks(
+                              tm.twitter,
+                              tm.github,
+                              tm.linkedin,
+                              tm.otherLink
+                            ),
+                          }
+
+                          return (
+                            <Grid xs={4}>
+                              <TeamMemberCard
+                                teamMember={teamMember}
+                                onEditClick={() => {
+                                  setMemberInEdit(teamMember)
+                                  setMemberFormVisible(true)
+                                }}
+                                onDeleteClick={() => {
+                                  const filtered = values.teamMembers.filter(
+                                    (tm) => tm.id !== teamMember.id
+                                  )
+                                  setFieldValue('teamMembers', filtered)
+                                }}
+                              />
+                            </Grid>
+                          )
+                        })}
                         {canEdit && (
                           <Grid xs={4}>
                             <Button
