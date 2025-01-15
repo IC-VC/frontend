@@ -10,7 +10,7 @@ import {
 import { APPLICATION_SECTIONS, EVALUATION_SECTIONS } from '@/utils/formConfig'
 import { Box, Button, Grid, Stack } from '@mui/joy'
 import { Formik, FormikValues } from 'formik'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import EvaluationTab from '@/components/EvaluationTab'
 import useProject from '@/hooks/useProject'
 import PhaseEventCard from '@/components/PhaseEventCard'
@@ -24,8 +24,6 @@ const ProjectStepForm = () => {
   const [loading, setLoading] = useState(false)
   const [step, setStep] = useState(0)
   const [phaseSubmitLoading, setPhaseSubmitLoading] = useState(false)
-
-  const navigate = useNavigate()
 
   const { projectStepPhases } = useProject(projectId || '')
 
@@ -136,8 +134,6 @@ const ProjectStepForm = () => {
         }
       })
     )
-
-    console.log('TEST', uploadUrls)
 
     if ('Ok' in uploadUrls) {
       for (let i in uploadUrls.Ok) {

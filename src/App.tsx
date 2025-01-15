@@ -69,12 +69,6 @@ const theme = extendTheme({
 })
 
 function App() {
-  const isMob = useMemo(() => {
-    return window.innerWidth <= 800
-  }, [])
-
-  if (isMob) return <MobileNotAvailable />
-
   return (
     <CssVarsProvider theme={theme}>
       <IdentityKitProvider

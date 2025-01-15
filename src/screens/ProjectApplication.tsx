@@ -44,7 +44,7 @@ const ProjectApplication = () => {
 
   return (
     <Grid container spacing={2} ml={5} mr={5}>
-      <Grid xs={4}>
+      <Grid xs={12} md={4}>
         <Stack
           component={Sheet}
           variant="outlined"
@@ -73,7 +73,7 @@ const ProjectApplication = () => {
 
         <ProjectSidebarForum />
       </Grid>
-      <Grid xs={8}>
+      <Grid xs={12} md={8}>
         {projectDetails && (
           <StepSubmission
             step={projectDetails}

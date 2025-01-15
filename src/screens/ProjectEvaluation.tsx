@@ -29,13 +29,13 @@ const ProjectEvaluation = () => {
 
   return (
     <Grid container spacing={2} ml={5} mr={5}>
-      <Grid xs={4}>
+      <Grid xs={12} md={4}>
         <StepVoteCard
           currentStep={currentStep}
           endDate={projectStepPhases?.[1]?.evaluationEndDate}
         />
       </Grid>
-      <Grid xs={8}>
+      <Grid xs={12} md={8}>
         <EvaluationTab
           currentStep={currentStep}
           setCurrentStep={setCurrentStep}

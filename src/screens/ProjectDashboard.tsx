@@ -44,7 +44,7 @@ const ProjectDashboard = () => {
 
   return (
     <Grid container spacing={2} ml={5} mr={5}>
-      <Grid xs={4}>
+      <Grid xs={12} md={4}>
         <Stack
           bgcolor={(theme) => theme.palette.background.body}
           component={Sheet}
@@ -79,7 +79,7 @@ const ProjectDashboard = () => {
         </Stack>
         <ProjectSidebarForum />
       </Grid>
-      <Grid xs={8}>
+      <Grid xs={12} md={8}>
         <Stack spacing={2}>
           <ProjectSection>
             <Typography level="h4">Project Profile</Typography>
