@@ -2,7 +2,6 @@ import useBackend from '@/hooks/useBackend'
 import { UserNeuron } from '@/idls/backend.did'
 import { Stack, Sheet, Typography, Divider } from '@mui/joy'
 import { CircularProgress } from '@mui/material'
-import { end } from '@popperjs/core'
 import { intervalToDuration } from 'date-fns'
 import { FC, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -77,9 +76,17 @@ const StepVoteCard: FC<Props> = ({ currentStep, endDate }) => {
         )
       )
 
-      Promise.all(neuronGradePromises)
+      Promise.allSettled(neuronGradePromises)
         .then((res) => {
-          setCurrentGrade(res[0]?.Ok)
+          const firstResponse = res[0]?.value
+          if ('Err' in firstResponse) {
+            const errorKey = Object.keys(firstResponse.Err)[0]
+            alert(firstResponse.Err[errorKey])
+          }
+
+          if ('Ok' in firstResponse) {
+            setCurrentGrade(firstResponse.Ok)
+          }
         })
         .catch(console.log)
         .finally(() => setGradeLoading(undefined))
@@ -88,12 +95,15 @@ const StepVoteCard: FC<Props> = ({ currentStep, endDate }) => {
   )
 
   useEffect(() => {
-    if (!end) return
+    if (!endDate) return
+    const currentDate = new Date()
+
+    if (currentDate > endDate) return
 
     const interval = setInterval(() => {
       const duration = intervalToDuration({
         start: new Date(),
-        end: endDate || new Date(),
+        end: endDate,
       })
 
       setPhaseDuration(duration)
@@ -105,8 +115,8 @@ const StepVoteCard: FC<Props> = ({ currentStep, endDate }) => {
   }, [endDate])
 
   const renderTimer = () => {
-    if (!phaseDuration) return
-    const { days, minutes, hours, seconds } = phaseDuration
+    const { days, minutes, hours, seconds } = phaseDuration || {}
+
     return (
       <Typography fontWeight="lg">
         {t(`phaseEventCard.timer`, {
