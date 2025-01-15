@@ -44,6 +44,7 @@ const FormField: FC<Props> = ({ name, type, disabled }) => {
         <FileUpload
           value={field.value}
           setValue={(file) => setFieldValue(field.name, file)}
+          isVideo={name === 'ICVC_FILE_1_10_0'}
         />
       )
     }

@@ -9,9 +9,14 @@ interface Props {
   name?: string
   value?: File
   setValue: (file: File) => void
+  isVideo?: boolean
 }
 
-const FileUpload: FC<Props> = ({ name, value, setValue }) => {
+const BYTES_IN_MB = 1_000_000
+const MAX_VIDEO_SIZE = 100
+const MAX_FILE_SIZE = 10
+
+const FileUpload: FC<Props> = ({ name, value, setValue, isVideo }) => {
   const { t } = useTranslation()
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -21,14 +26,19 @@ const FileUpload: FC<Props> = ({ name, value, setValue }) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     maxFiles: 1,
-    accept: {
-      'image/png': ['.png', '.jpg', '.jpeg'],
-      'application/pdf': ['.pdf'],
-      'application/vnd.ms-excel': ['.xls'],
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': [
-        '.xlsx',
-      ],
-    },
+    maxSize: isVideo
+      ? MAX_VIDEO_SIZE * BYTES_IN_MB
+      : MAX_FILE_SIZE * BYTES_IN_MB,
+    accept: isVideo
+      ? { 'video/mp4': ['.mp4', '.m4a', '.m4v'] }
+      : {
+          'image/png': ['.png', '.jpg', '.jpeg'],
+          'application/pdf': ['.pdf'],
+          'application/vnd.ms-excel': ['.xls'],
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': [
+            '.xlsx',
+          ],
+        },
   })
 
   const renderCardContent = () => {
@@ -56,8 +66,12 @@ const FileUpload: FC<Props> = ({ name, value, setValue }) => {
   return (
     <Stack flex={1}>
       {name && <FormLabel>{t(`form.${name}`)}</FormLabel>}
-      <Typography level="body-xs">
-        Accepted file types: png, jpg, jpeg, pdf, xls, xlsx
+      <Typography level="body-md">
+        Accepted file types:{' '}
+        {isVideo ? 'mp4, m4v' : 'png, jpg, jpeg, pdf, xls, xlsx'}
+      </Typography>
+      <Typography level="body-sm">
+        Max: {isVideo ? MAX_VIDEO_SIZE : MAX_FILE_SIZE} MB
       </Typography>
       <Stack
         component={Sheet}
