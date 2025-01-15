@@ -1244,21 +1244,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nfid/identitykit@npm:^1.0.3":
-  version: 1.0.3
-  resolution: "@nfid/identitykit@npm:1.0.3"
+"@nfid/identitykit@npm:^1.0.7":
+  version: 1.0.7
+  resolution: "@nfid/identitykit@npm:1.0.7"
   dependencies:
     "@headlessui/react": 2.1.8
     "@radix-ui/react-dialog": ^1.1.1
     "@radix-ui/react-tooltip": ^1.1.2
-    "@slide-computer/signer": ^3.7.0
-    "@slide-computer/signer-agent": ^3.7.0
-    "@slide-computer/signer-extension": ^3.7.0
-    "@slide-computer/signer-storage": ^3.7.0
-    "@slide-computer/signer-transport-auth-client": ^3.7.0
-    "@slide-computer/signer-transport-plug": ^3.7.0
-    "@slide-computer/signer-transport-stoic": ^3.7.0
-    "@slide-computer/signer-web": ^3.7.0
+    "@slide-computer/signer": 3.11.0
+    "@slide-computer/signer-agent": 3.11.0
+    "@slide-computer/signer-extension": 3.11.0
+    "@slide-computer/signer-storage": 3.11.0
+    "@slide-computer/signer-transport-auth-client": 3.11.0
+    "@slide-computer/signer-transport-plug": 3.11.0
+    "@slide-computer/signer-transport-stoic": 3.11.0
+    "@slide-computer/signer-web": 3.11.0
     clsx: ^2.1.1
     tailwindcss: ^3.4.13
     tailwindcss-scoped-preflight: ^3.4.5
@@ -1273,7 +1273,7 @@ __metadata:
     "@dfinity/principal": ">=2.1.3"
     react: ">=18.3.1"
     react-dom: ">=18.3.1"
-  checksum: d7173d91ce7e796ec15d2affa6873ac92f48ef117605597c84d4ce58507a436b3130189cfa590b7ddc62e70db831dd56e17675caca9166c6183f96fc3da3efd5
+  checksum: 73029555148b4eb3e97566825e9c93c1ae732f77ba74688c26526e15a78ded5c38848082d2af630a5530c0ee3f3c3b9140370a9e012a1783be5e23016596cb12
   languageName: node
   linkType: hard
 
@@ -1970,95 +1970,94 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@slide-computer/signer-agent@npm:^3.7.0":
-  version: 3.7.1
-  resolution: "@slide-computer/signer-agent@npm:3.7.1"
+"@slide-computer/signer-agent@npm:3.11.0":
+  version: 3.11.0
+  resolution: "@slide-computer/signer-agent@npm:3.11.0"
   peerDependencies:
     "@dfinity/agent": ^2.1.3
     "@dfinity/candid": ^2.1.3
     "@dfinity/identity": ^2.1.3
     "@dfinity/principal": ^2.1.3
-    "@slide-computer/signer": ^3.7.1
-  checksum: 86e773512611be29af0d83edd57c2fe3f20e8fed8919603ebaf2e8b8d409a98fb1a50b4300d57cde9ecc62d2754438c8af9c088981f4e9c48dc8a1c9e454fae5
+    "@slide-computer/signer": ^3.11.0
+  checksum: 7cd48694522d05e85c12113bc3bae26b9f02d49c744e2b7d825861c5565d22d323222f6e5b4f656827ff796af25cf5535dab7ecf770b448585780b52923def84
   languageName: node
   linkType: hard
 
-"@slide-computer/signer-extension@npm:^3.7.0":
-  version: 3.7.1
-  resolution: "@slide-computer/signer-extension@npm:3.7.1"
+"@slide-computer/signer-extension@npm:3.11.0":
+  version: 3.11.0
+  resolution: "@slide-computer/signer-extension@npm:3.11.0"
   peerDependencies:
-    "@slide-computer/signer": ^3.7.1
-  checksum: c7652a02bcb9d7daaa6ee087394cf6a9d969ae74386a29de09ff9fbb017bb1bfc706ebe57da84095e953c13b72b91ec1b0cbb8b36eeb0bd418956f10b1711fa3
+    "@slide-computer/signer": ^3.11.0
+  checksum: 913d864e611186277f262c77e04cf2b09def66b3baaf6f21a56929982753fabb1e82c23117d76b4fb823cddf6bf754a75a60aa859cd52496d3e0712221970bd3
   languageName: node
   linkType: hard
 
-"@slide-computer/signer-storage@npm:^3.7.0":
-  version: 3.7.1
-  resolution: "@slide-computer/signer-storage@npm:3.7.1"
+"@slide-computer/signer-storage@npm:3.11.0":
+  version: 3.11.0
+  resolution: "@slide-computer/signer-storage@npm:3.11.0"
   dependencies:
     idb-keyval: ^6.2.1
   peerDependencies:
     "@dfinity/identity": ^2.1.3
-  checksum: 36d96a2a3afb6397926d338b51302a3d164fd13b88e1abec3d9f6e63aa4e7a53b1f5f4d326627140fd0c1005062ea9fb45888cc7506f2d888c06fa53a06fe0ba
+  checksum: 9ce04fb3438e96248366aaf150215c6aa35e67bc6b8334e7e403974b28e5c9a0d3c5133f1b6bc336d8ac4fb9fb7ec7103f09183783dbd813949472ee2ac34b9b
   languageName: node
   linkType: hard
 
-"@slide-computer/signer-transport-auth-client@npm:^3.7.0":
-  version: 3.7.1
-  resolution: "@slide-computer/signer-transport-auth-client@npm:3.7.1"
+"@slide-computer/signer-transport-auth-client@npm:3.11.0":
+  version: 3.11.0
+  resolution: "@slide-computer/signer-transport-auth-client@npm:3.11.0"
   peerDependencies:
     "@dfinity/auth-client": ^2.1.3
     "@dfinity/identity": ^2.1.3
     "@dfinity/principal": ^2.1.3
-    "@slide-computer/signer": ^3.7.1
-  checksum: 6f67e2cbf18ba961638e689d0b2a6ae4d31d655e1319974416399f8ae2c2a37451f1cc8d34f280e7b406e0ee3a04d5e210c14ae96c8e18cc358ba006a1488f8b
+    "@slide-computer/signer": ^3.11.0
+  checksum: cd50b893ad0506dabbb9f175450d572956ebe2c4aca72b2901ba9d8ff9fa95b51bf86be47842e1d11cbb46a2f7c80857ac00595dde39ec0ee8794b79bb3b0b1d
   languageName: node
   linkType: hard
 
-"@slide-computer/signer-transport-plug@npm:^3.7.0":
-  version: 3.7.1
-  resolution: "@slide-computer/signer-transport-plug@npm:3.7.1"
+"@slide-computer/signer-transport-plug@npm:3.11.0":
+  version: 3.11.0
+  resolution: "@slide-computer/signer-transport-plug@npm:3.11.0"
   peerDependencies:
     "@dfinity/agent": ^2.1.3
     "@dfinity/identity": ^2.1.3
     "@dfinity/principal": ^2.1.3
-    "@slide-computer/signer": ^3.7.1
-    "@slide-computer/signer-storage": ^3.7.1
-  checksum: 31e0fb778151f07b59a3133898e710a7aba72cf675e9d2f414101b254ce27ef8add29076408d2250da384c8931822b3955b224178304d0845078c9a008257a19
+    "@slide-computer/signer": ^3.11.0
+  checksum: 799fd7a27dea309ba8f51f503ea5c570a194afc7c7cd3fc4c83816cc2b7ff34def98595e6f10d4b3380ff1bd711aa837ec14314648ebb5fb3939f07ea1a2076b
   languageName: node
   linkType: hard
 
-"@slide-computer/signer-transport-stoic@npm:^3.7.0":
-  version: 3.7.1
-  resolution: "@slide-computer/signer-transport-stoic@npm:3.7.1"
+"@slide-computer/signer-transport-stoic@npm:3.11.0":
+  version: 3.11.0
+  resolution: "@slide-computer/signer-transport-stoic@npm:3.11.0"
   peerDependencies:
     "@dfinity/agent": ^2.1.3
     "@dfinity/identity": ^2.1.3
     "@dfinity/principal": ^2.1.3
-    "@slide-computer/signer": ^3.7.1
-    "@slide-computer/signer-storage": ^3.7.1
-  checksum: ce80a93b1cfcc09b6aee4675a03f46e4e1695a07c5cee1689becda3be3444bc44933374b9eda502fa4cf2de728012a2a0ffb6e9ffa2de248c26c7ac49f13b90b
+    "@slide-computer/signer": ^3.11.0
+    "@slide-computer/signer-storage": ^3.11.0
+  checksum: f197237304c0e20b2604bfb8943dcb8063075d6681e4f9a3cc651919b5ea78c821fe4128b61d78991c1de26606691deb83816cc8bcf3e31b1c2a6d2734f64bff
   languageName: node
   linkType: hard
 
-"@slide-computer/signer-web@npm:^3.7.0":
-  version: 3.7.1
-  resolution: "@slide-computer/signer-web@npm:3.7.1"
+"@slide-computer/signer-web@npm:3.11.0":
+  version: 3.11.0
+  resolution: "@slide-computer/signer-web@npm:3.11.0"
   peerDependencies:
-    "@slide-computer/signer": ^3.7.1
-  checksum: 02b42d708f44c1131e69f3b50586e7dbbc8d451aaf6b73b30f2354e75285d000023c26be4731bf42618fce16e90521409c6d14a119712251cd434eb2be135b0d
+    "@slide-computer/signer": ^3.11.0
+  checksum: 6d0dc0cade00b85a5af640b6d3a5f47bd4b358c4bc8be4f131ca256db976aeec1bb30ee0eb1517d02c1a430f65e9eeadec60ded2e55bf856653dd40f76fb42bf
   languageName: node
   linkType: hard
 
-"@slide-computer/signer@npm:^3.7.0":
-  version: 3.7.1
-  resolution: "@slide-computer/signer@npm:3.7.1"
+"@slide-computer/signer@npm:3.11.0":
+  version: 3.11.0
+  resolution: "@slide-computer/signer@npm:3.11.0"
   peerDependencies:
     "@dfinity/agent": ^2.1.3
     "@dfinity/candid": ^2.1.3
     "@dfinity/identity": ^2.1.3
     "@dfinity/principal": ^2.1.3
-  checksum: d29e422128ea3153a9610ee90b318057fd1a5fdba2b54891841e16caeaecf1d738957bfeccfe57ed850b5a6c4fddd1e171cb2671315caa7d16bbc68ee765d563
+  checksum: 35c537d0b4b75d0e56fff404897899ae3e4858140aad2f9c2076320b313a8d381283536786bc78c623659427a6fd7ee4a843247a0a118b10648458507b2019fa
   languageName: node
   linkType: hard
 
@@ -3794,7 +3793,7 @@ __metadata:
     "@mui/icons-material": ^5.15.21
     "@mui/joy": ^5.0.0-beta.36
     "@mui/material": ^5.15.21
-    "@nfid/identitykit": ^1.0.3
+    "@nfid/identitykit": ^1.0.7
     "@open-ic/openchat-xframe": ^1.0.6
     "@types/react": ^18.3.3
     "@types/react-dom": ^18.3.0

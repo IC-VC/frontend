@@ -11,7 +11,12 @@ import ConfigProvider from './providers/ConfigProvider'
 import { useMemo } from 'react'
 import MobileNotAvailable from './screens/MobileNotAvailable'
 import { IdentityKitProvider } from '@nfid/identitykit/react'
-import { IdentityKitAuthType, InternetIdentity, Plug } from '@nfid/identitykit'
+import {
+  IdentityKitAuthType,
+  InternetIdentity,
+  Plug,
+  OISY,
+} from '@nfid/identitykit'
 
 import './global.css'
 
@@ -74,10 +79,11 @@ function App() {
     <CssVarsProvider theme={theme}>
       <IdentityKitProvider
         authType={IdentityKitAuthType.DELEGATION}
-        signers={[Plug, InternetIdentity]}
+        signers={[Plug, OISY, InternetIdentity]}
         featuredSigner={Plug}
         signerClientOptions={{
           targets: [import.meta.env.VITE_BACKEND_CANISTER_ID],
+          derivationOrigin: 'https://mnc6b-aaaaa-aaaap-qhnrq-cai.icp0.io',
         }}
       >
         <BackendProvider>
