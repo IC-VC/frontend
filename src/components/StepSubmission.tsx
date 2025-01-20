@@ -1,7 +1,7 @@
+import { FC } from 'react'
 import { Step } from '@/idls/backend.did'
 import { Question } from '@/utils/formConfig'
 import { Divider, Sheet, Stack, Typography } from '@mui/joy'
-import React, { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const BASE_URL = 'https://icvc-s3-uploads.s3.eu-central-1.amazonaws.com'
@@ -51,6 +51,8 @@ const FileSubmission = ({
 
   const fullUrl = `${BASE_URL}/${url}`
 
+  const isVideo = fileType === 'ProductDemo'
+
   return (
     <Stack
       component={Sheet}
@@ -65,9 +67,16 @@ const FileSubmission = ({
         {t(`form.${id}`)}
       </Typography>
       <Divider sx={{ width: 100 }} />
-      <a href={fullUrl} target="_blank">
-        <Typography level="body-md">{t(`fileTypes.${fileType}`)}</Typography>
-      </a>
+      {!isVideo && (
+        <a href={fullUrl} target="_blank">
+          <Typography level="body-md">{t(`fileTypes.${fileType}`)}</Typography>
+        </a>
+      )}
+      {isVideo && (
+        <video width="100%" height="100%" controls>
+          <source src={fullUrl} type="video/mp4" />
+        </video>
+      )}
     </Stack>
   )
 }
