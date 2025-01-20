@@ -8,8 +8,6 @@ import { initReactI18next } from 'react-i18next'
 import { enLocalisation } from './locales/en'
 import BackendProvider from './providers/BackendProvider'
 import ConfigProvider from './providers/ConfigProvider'
-import { useMemo } from 'react'
-import MobileNotAvailable from './screens/MobileNotAvailable'
 import { IdentityKitProvider } from '@nfid/identitykit/react'
 import {
   IdentityKitAuthType,
@@ -19,6 +17,7 @@ import {
 } from '@nfid/identitykit'
 
 import './global.css'
+import '@mdxeditor/editor/style.css'
 
 i18n.use(initReactI18next).init({
   resources: {

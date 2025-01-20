@@ -1,17 +1,30 @@
-import React, { FC } from 'react'
+import { FC, useRef } from 'react'
 import {
+  Box,
   FormControl,
-  FormHelperText,
   FormLabel,
   Input,
   Stack,
-  Textarea,
   Typography,
   useTheme,
 } from '@mui/joy'
 import { Field } from 'formik'
 import { useTranslation } from 'react-i18next'
 import FileUpload from './FileUpload'
+import {
+  BlockTypeSelect,
+  BoldItalicUnderlineToggles,
+  CreateLink,
+  ListsToggle,
+  MDXEditor,
+  headingsPlugin,
+  listsPlugin,
+  markdownShortcutPlugin,
+  toolbarPlugin,
+} from '@mdxeditor/editor'
+import '@mdxeditor/editor/style.css'
+
+import Markdown from 'react-markdown'
 
 interface Props {
   name: string
@@ -21,20 +34,44 @@ interface Props {
 
 const FormField: FC<Props> = ({ name, type, disabled }) => {
   const { t } = useTranslation()
-
   const { palette } = useTheme()
+
+  const editorRef = useRef()
 
   const getBody = (field: any, setFieldValue: any) => {
     if (type === 'textarea') {
+      if (disabled) {
+        return (
+          <Box className="mdxinput">
+            <Markdown>{field.value}</Markdown>
+          </Box>
+        )
+      }
+
       return (
         <>
-          <Textarea
-            minRows={5}
-            variant="outlined"
-            {...field}
-            disabled={disabled}
+          <MDXEditor
+            plugins={[
+              headingsPlugin(),
+              listsPlugin(),
+              markdownShortcutPlugin(),
+              toolbarPlugin({
+                toolbarClassName: 'my-classname',
+                toolbarContents: () => (
+                  <>
+                    <BlockTypeSelect />
+                    <BoldItalicUnderlineToggles />
+                    <CreateLink />
+                    <ListsToggle />
+                  </>
+                ),
+              }),
+            ]}
+            markdown={field.value || ''}
+            contentEditableClassName="mdxinput"
+            ref={editorRef}
+            onChange={(value) => setFieldValue(field.name, value)}
           />
-          <FormHelperText>Max 500 characters</FormHelperText>
         </>
       )
     }

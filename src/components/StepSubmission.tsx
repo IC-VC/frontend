@@ -3,6 +3,7 @@ import { Step } from '@/idls/backend.did'
 import { Question } from '@/utils/formConfig'
 import { Divider, Sheet, Stack, Typography } from '@mui/joy'
 import { useTranslation } from 'react-i18next'
+import Markdown from 'react-markdown'
 
 const BASE_URL = 'https://icvc-s3-uploads.s3.eu-central-1.amazonaws.com'
 
@@ -33,7 +34,7 @@ const QuestionSubmission = ({
         {t(`form.${id}`)}
       </Typography>
       <Divider sx={{ width: 100 }} />
-      <Typography level="body-md">{response || '-'}</Typography>
+      <Markdown>{response || '-'}</Markdown>
     </Stack>
   )
 }
