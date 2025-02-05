@@ -1,4 +1,5 @@
 import EvaluationTab from '@/components/EvaluationTab'
+import ProjectDetailsCard from '@/components/ProjectDetailsCard'
 import ProjectSidebarForum from '@/components/ProjectSidebarForum'
 import StepSubmission from '@/components/StepSubmission'
 import StepVoteCard from '@/components/StepVoteCard'
@@ -6,7 +7,7 @@ import useBackend from '@/hooks/useBackend'
 import useProject from '@/hooks/useProject'
 import { Step } from '@/idls/backend.did'
 import { EVALUATION_SECTIONS } from '@/utils/formConfig'
-import { Grid } from '@mui/joy'
+import { Grid, Stack } from '@mui/joy'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -17,7 +18,8 @@ const ProjectEvaluation = () => {
   const { backendActor } = useBackend()
   const [step, setStep] = useState<Step>()
 
-  const { projectStepPhases } = useProject(projectId)
+  const { project, logo, amountRaising, projectStatus, projectStepPhases } =
+    useProject(projectId)
 
   useEffect(() => {
     backendActor
@@ -31,10 +33,19 @@ const ProjectEvaluation = () => {
   return (
     <Grid container spacing={2} ml={5} mr={5}>
       <Grid xs={12} md={4}>
-        <StepVoteCard
-          currentStep={currentStep}
-          endDate={projectStepPhases?.[1]?.evaluationEndDate}
-        />
+        <Stack spacing={2}>
+          <ProjectDetailsCard
+            title={project?.title}
+            moto={project?.moto}
+            logo={logo}
+            amountRaising={amountRaising}
+            projectStatus={projectStatus}
+          />
+          <StepVoteCard
+            currentStep={currentStep}
+            endDate={projectStepPhases?.[1]?.evaluationEndDate}
+          />
+        </Stack>
         <ProjectSidebarForum />
       </Grid>
       <Grid xs={12} md={8}>

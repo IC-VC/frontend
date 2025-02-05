@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { Project } from '@/idls/backend.did'
 import {
   AspectRatio,

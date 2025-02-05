@@ -1,4 +1,4 @@
-import { Stack, Tab, TabList, Tabs, Box, Typography } from '@mui/joy'
+import { Stack, Box, Typography } from '@mui/joy'
 import {
   FC,
   MutableRefObject,

@@ -14,6 +14,7 @@ import useProposal from '@/hooks/useProposal'
 import { useCallback, useEffect, useMemo } from 'react'
 import { SNS_FORUMS } from '@/utils/forumConfig'
 import ProjectSidebarForum from '@/components/ProjectSidebarForum'
+import ProjectDetailsCard from '@/components/ProjectDetailsCard'
 
 const FIELDS = [
   'ICVC_QUESTION_0_0_0',
@@ -26,7 +27,14 @@ const FIELDS = [
 const ProjectApplication = () => {
   const { projectId } = useParams()
 
-  const { projectDetails, step0ProposalId } = useProject(projectId || '')
+  const {
+    project,
+    logo,
+    amountRaising,
+    projectDetails,
+    step0ProposalId,
+    projectStatus,
+  } = useProject(projectId || '')
   const { results } = useProposal(step0ProposalId)
 
   const progress = useMemo(() => {
@@ -45,6 +53,13 @@ const ProjectApplication = () => {
   return (
     <Grid container spacing={2} ml={5} mr={5}>
       <Grid xs={12} md={4}>
+        <ProjectDetailsCard
+          title={project?.title}
+          moto={project?.moto}
+          logo={logo}
+          amountRaising={amountRaising}
+          projectStatus={projectStatus}
+        />
         <Stack
           component={Sheet}
           variant="outlined"
@@ -52,6 +67,7 @@ const ProjectApplication = () => {
           borderRadius={10}
           p={2}
           spacing={3}
+          mt={2}
         >
           <Box>
             <Typography level="h3">Round 1 Vote</Typography>

@@ -1,13 +1,13 @@
 import EvaluationResultTable from '@/components/EvaluationResultTable'
 import LinksView from '@/components/LinksView'
+import ProjectDetailsCard from '@/components/ProjectDetailsCard'
 import ProjectSidebarForum from '@/components/ProjectSidebarForum'
 import SnsVoteGrid from '@/components/SnsVoteGrid'
 import TeamMemberCard from '@/components/TeamMemberCard'
 import useProject from '@/hooks/useProject'
 import useProposal from '@/hooks/useProposal'
-import { Avatar, Chip, Divider, Grid, Sheet, Stack, Typography } from '@mui/joy'
+import { Divider, Grid, Sheet, Stack, Typography } from '@mui/joy'
 import { FC, PropsWithChildren } from 'react'
-import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 
 const ProjectSection: FC<PropsWithChildren> = ({ children }) => {
@@ -28,8 +28,6 @@ const ProjectSection: FC<PropsWithChildren> = ({ children }) => {
 const ProjectDashboard = () => {
   const { projectId } = useParams()
 
-  const { t } = useTranslation()
-
   const {
     project,
     amountRaising,
@@ -45,38 +43,13 @@ const ProjectDashboard = () => {
   return (
     <Grid container spacing={2} ml={5} mr={5}>
       <Grid xs={12} md={4}>
-        <Stack
-          bgcolor={(theme) => theme.palette.background.body}
-          component={Sheet}
-          variant="outlined"
-          boxShadow="lg"
-          borderRadius={10}
-          p={2}
-        >
-          <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar src={logo} />
-            <Stack>
-              <Typography level="h4">{project?.title}</Typography>
-              <Typography level="body-md">{project?.moto}</Typography>
-            </Stack>
-          </Stack>
-          <Stack
-            mt={5}
-            justifyContent="space-between"
-            direction="row"
-            alignItems="center"
-          >
-            <Stack>
-              <Typography level="body-sm">Size of Round</Typography>
-              <Typography level="h4" fontWeight="lg">
-                $ {amountRaising?.toLocaleString()}
-              </Typography>
-            </Stack>
-            <Stack>
-              <Chip>{t(`projectStatuses.${projectStatus}`)}</Chip>
-            </Stack>
-          </Stack>
-        </Stack>
+        <ProjectDetailsCard
+          logo={logo}
+          title={project?.title}
+          moto={project?.moto}
+          amountRaising={amountRaising}
+          projectStatus={projectStatus}
+        />
         <ProjectSidebarForum />
       </Grid>
       <Grid xs={12} md={8}>

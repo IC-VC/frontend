@@ -143,4 +143,8 @@ export const enLocalisation = {
     FinancialModels: 'Financial Models',
     ProductDemo: 'Product Demo',
   },
+  stepVoteCard: {
+    voteWithNeurons_one: 'Vote with {{count}} neuron',
+    voteWithNeurons_other: 'Vote with {{count}} neurons',
+  },
 }

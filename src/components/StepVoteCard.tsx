@@ -180,7 +180,9 @@ const StepVoteCard: FC<Props> = ({ currentStep, endDate }) => {
           ))}
         </Stack>
       </Stack>
-      <Typography>Voting with {linkedNeurons.length} neurons</Typography>
+      <Typography>
+        {t('stepVoteCard.voteWithNeurons', { count: linkedNeurons.length })}
+      </Typography>
     </Stack>
   )
 }
