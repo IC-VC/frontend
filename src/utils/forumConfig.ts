@@ -58,4 +58,3 @@ export const SNS_FORUMS: SNSForum[] = [
     channel: '/community/rwbxa-nqaaa-aaaaf-bifjq-cai/channel/1510644717',
   },
 ]
-]
