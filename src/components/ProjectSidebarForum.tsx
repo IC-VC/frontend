@@ -11,17 +11,19 @@ const ProjectSidebarForum = () => {
   const chatRef = useRef()
   const [chatClient, setChatClient] = useState<OpenChatXFrame>()
 
-  const channelUrl = useMemo(() => {
+  const channelId = useMemo(() => {
     return SNS_FORUMS.find((forum) => `${forum.projectId}` == projectId)
-      ?.channel
+      ?.channelId
   }, [SNS_FORUMS, projectId])
 
   useEffect(() => {
-    if (!chatRef.current || !channelUrl) return
+    if (!chatRef.current || !channelId) return
+
+    const fullUrl = `/community/rwbxa-nqaaa-aaaaf-bifjq-cai/channel/${channelId}`
 
     initialise(chatRef?.current, {
       targetOrigin: 'https://oc.app',
-      initialPath: channelUrl,
+      initialPath: fullUrl,
       theme: {
         name: 'signals',
         base: 'light',
@@ -44,9 +46,9 @@ const ProjectSidebarForum = () => {
     })
       .then(setChatClient)
       .catch(console.log)
-  }, [chatRef, channelUrl])
+  }, [chatRef, channelId])
 
-  if (!channelUrl) return
+  if (!channelId) return
 
   return (
     <Stack

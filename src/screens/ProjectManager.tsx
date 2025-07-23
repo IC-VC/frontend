@@ -46,7 +46,7 @@ const ProjectManager = () => {
             <ProjectStageCard
               stageName="Completion Phase"
               subtitle="Access legal documentation and receive funds"
-              disabled={!projectId || getStepState(3) === StepStatus.NotStarted}
+              disabled={!projectId || getStepState(3) !== StepStatus.NotStarted}
             />
           </Stack>
         </Grid>

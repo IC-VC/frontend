@@ -80,10 +80,16 @@ const Forum = () => {
                 >
                   <img
                     onClick={() => {
-                      chatClient?.changePath(forum.channel)
+                      chatClient?.changePath(
+                        `https://oc.app/community/rwbxa-nqaaa-aaaaf-bifjq-cai/channel/${forum.channelId}`
+                      )
                       setSelectedProject(forum)
                     }}
-                    src={forum.logo}
+                    src={
+                      forum.projectId === 0
+                        ? 'https://3r4gx-wqaaa-aaaaq-aaaia-cai.icp0.io/v1/sns/root/nuywj-oaaaa-aaaaq-aadta-cai/logo.png'
+                        : `https://icvc-s3-uploads.s3.eu-central-1.amazonaws.com/projects/${forum.projectId}/0/0/Logo`
+                    }
                     width={30}
                     height={30}
                   />

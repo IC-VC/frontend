@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   Navigate,
   Outlet,
@@ -25,6 +24,7 @@ import NeuronList from './NeuronList'
 import NeuronForm from './NeuronForm'
 import MyProjects from '@/screens/MyProjects'
 import { Stack } from '@mui/joy'
+import ProjectCompletion from '@/screens/ProjectCompletion'
 
 const RootHandler = () => {
   return null
@@ -96,6 +96,10 @@ const ROUTE_DATA: RouteObject[] = [
       {
         path: ROUTES.PROJECTS_SHOW_EVALUATION(':projectId'),
         element: <ProjectEvaluation />,
+      },
+      {
+        path: ROUTES.PROJECTS_SHOW_COMPLETION(':projectId'),
+        element: <ProjectCompletion />,
       },
     ],
   },

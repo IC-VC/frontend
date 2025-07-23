@@ -147,4 +147,10 @@ export const enLocalisation = {
     voteWithNeurons_one: 'Vote with {{count}} neuron',
     voteWithNeurons_other: 'Vote with {{count}} neurons',
   },
+  snsVoteCard: {
+    phases: {
+      0: 'This is an vote to move this project to Due Dilligence phase or reject the invesment opportunity',
+      2: 'This is the final vote to decide whether ICVC should invest in this project or reject the invesment opportunity',
+    },
+  },
 }

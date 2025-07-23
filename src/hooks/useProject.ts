@@ -102,7 +102,6 @@ const useProject = (projectId: string) => {
     backendActor
       .getAllStepPhaseByProjectId(BigInt(projectId || ''))
       .then((response) => {
-        console.log('PHASES', response)
         if ('Ok' in response)
           setProjectStepPhases(response.Ok.map(mapStepPhase))
       })
@@ -164,7 +163,6 @@ const useProject = (projectId: string) => {
     backendActor
       .getStepPhaseAssessmentResult(BigInt(projectId), BigInt(0))
       .then((result) => {
-        console.log('ASSESMENT RESULt', result)
         if ('Ok' in result) {
           setSubmissionsStepResults(result.Ok)
         }

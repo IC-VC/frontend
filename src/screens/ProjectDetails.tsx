@@ -66,6 +66,7 @@ const ProjectDetails = () => {
               stageName="Round 3"
               subtitle="Completion"
               stageStatus={getStepState(3)}
+              path={ROUTES.PROJECTS_SHOW_COMPLETION(projectId || '')}
             />
           </Stack>
         </Grid>

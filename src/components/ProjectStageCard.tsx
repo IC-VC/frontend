@@ -38,6 +38,7 @@ const ProjectStageCard: FC<Props> = ({
 
   const canClick = useMemo(() => {
     if (disabled) return false
+    if (stageName === 'Dashboard') return true
     if (!stageStatus) return true
 
     return [
@@ -45,7 +46,7 @@ const ProjectStageCard: FC<Props> = ({
       StepStatus.NotApproved,
       StepStatus.Approved,
     ].includes(stageStatus)
-  }, [disabled, stageStatus])
+  }, [disabled, stageStatus, stageName])
 
   return (
     <Stack
